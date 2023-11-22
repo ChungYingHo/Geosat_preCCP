@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-const center = ref([40, 40])
+const center = ref([143, 40])
 const projection = ref('EPSG:4326')
 const zoom = ref(8)
 const rotation = ref(0)
@@ -10,7 +10,7 @@ const rotation = ref(0)
     <ol-map
       :loadTilesWhileAnimating="true"
       :loadTilesWhileInteracting="true"
-      style="height: 400px"
+      style="height: 100vh"
     >
       <ol-view
         ref="view"
