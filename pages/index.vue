@@ -2,5 +2,8 @@
 </script>
 
 <template>
-    <MapDemo />
+    <div>
+        <NuxtLink to="/login">login</NuxtLink>
+        <NuxtLink to="/sign-up">sign up</NuxtLink>
+    </div>
 </template>
