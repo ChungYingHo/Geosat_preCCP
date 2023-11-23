@@ -3,9 +3,11 @@ import '~/assets/styles/sign-in-up.scss'
 </script>
 
 <template>
-    <div class="sign-layout">
-        <h1>hello</h1>
-        <slot />
-    </div>
+    <v-app>
+        <div class="sign-layout">
+            <h1>hello</h1>
+            <slot />
+        </div>
+    </v-app>
 </template>
 
