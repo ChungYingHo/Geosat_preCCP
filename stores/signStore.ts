@@ -37,6 +37,9 @@ export const useSignStore = defineStore('Sign_', ()=>{
                     icon: "success",
                     title: "Login successfully"
                 })
+                return navigateTo({
+                    path: '/main-page'
+                })
             }else{
                 Toast.fire({
                     icon: "error",
