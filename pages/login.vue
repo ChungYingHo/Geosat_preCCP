@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
 // page setting
 definePageMeta({
     layout: 'sign-in-up'
@@ -63,19 +65,15 @@ const visible = ref(false)
             </v-btn>
 
             <v-card-text class="d-flex justify-space-between">
-                <a
+                <RouterLink
+                    to="/sign-up"
                     class="text-blue text-decoration-none"
-                    href="#"
-                    rel="noopener noreferrer"
-                    target="_blank"
                 >
                 Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
-                </a>
+                </RouterLink>
                 <a
                     class="text-blue text-decoration-none"
                     href="#"
-                    rel="noopener noreferrer"
-                    target="_blank"
                 >
                 Change Language
                 </a>
