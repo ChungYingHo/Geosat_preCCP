@@ -7,9 +7,6 @@ definePageMeta({
     layout: 'sign-in-up'
 })
 const visible = ref(false)
-const route = useRoute()
-
-console.log(route.path)
 </script>
 
 <template>
