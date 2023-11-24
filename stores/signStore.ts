@@ -1,4 +1,19 @@
+import Swal from 'sweetalert2'
+
 export const useSignStore = defineStore('Sign_', ()=>{
+    // sweetalert2 引用
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      })
+
     // 使用者登入資料
     const loginEmail = ref('')
     const loginPassword = ref('')
@@ -11,26 +26,53 @@ export const useSignStore = defineStore('Sign_', ()=>{
     // 驗證規則
     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     const rules = {
-        required: value => !!value || 'Required.',
-        counter: value => value.length <= 10 || 'Max 10 characters',
-        email: value => pattern.test(value) || 'Invalid e-mail.',
+        required: (value: string) => !!value || 'Required.',
+        counter: (value: string) => value.length <= 10 || 'Max 10 characters',
+        email: (value: string) => pattern.test(value) || 'Invalid e-mail.',
     }
-    const handleSubmit = ()=>{
-        if(name.value.length <= 10 && password.value.length <= 10 && pattern.test(email.value) && password.value === checkedPassword.value){
-            return navigateTo({
-                path: '/login'
-            })
+    const handleSubmit = (path:string)=>{
+        if(path === ('/login')){
+            if(loginEmail.value.length > 0 && loginPassword.value.length > 0){
+                Toast.fire({
+                    icon: "success",
+                    title: "Login successfully"
+                })
+            }else{
+                Toast.fire({
+                    icon: "error",
+                    title: "Non executed account or password."
+                })
+            }
         }else{
-            alert('Enter right information')
+            if(name.value.length <= 10 && password.value.length <= 10 && pattern.test(email.value) && password.value === checkedPassword.value){
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed up successfully"
+                })
+                return navigateTo({
+                    path: '/login'
+                })
+            }else{
+                Toast.fire({
+                    icon: "error",
+                    title: "Enter correct information"
+                })
+            }
         }
     }
 
+    
+      
+
     return{
+        loginEmail,
+        loginPassword,
         name,
         email,
         password,
         checkedPassword,
         rules,
-        handleSubmit
+        handleSubmit,
+        Toast
     }
 })

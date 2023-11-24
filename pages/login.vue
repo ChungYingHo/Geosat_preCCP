@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-
+import { useSignStore } from '#imports';
+const store = useSignStore()
 // page setting
 definePageMeta({
     layout: 'sign-in-up'
@@ -21,7 +22,8 @@ console.log(route.path)
             <v-img
                 src="~/assets/images/faked-logo.png"
                 width="8rem"
-                class="mx-auto"></v-img>
+                class="mx-auto">
+            </v-img>
 
             <div class="text-subtitle-1 text-medium-emphasis">Login with...</div>
             <button class="sign-btn"><img src="~/assets/images/google.png"></button>
@@ -34,6 +36,8 @@ console.log(route.path)
                 placeholder="Email address"
                 prepend-inner-icon="mdi-email-outline"
                 variant="outlined"
+                :rules="[store.rules.required]"
+                v-model="store.loginEmail"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -55,6 +59,8 @@ console.log(route.path)
                 prepend-inner-icon="mdi-lock-outline"
                 variant="outlined"
                 @click:append-inner="visible = !visible"
+                :rules="[store.rules.required]"
+                v-model="store.loginPassword"
             ></v-text-field>
 
             <v-btn
@@ -63,6 +69,7 @@ console.log(route.path)
                 color="blue"
                 size="large"
                 variant="tonal"
+                @click="store.handleSubmit('/login')"
             >
                 Log In
             </v-btn>
