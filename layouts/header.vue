@@ -35,7 +35,7 @@ import '~/assets/styles/main-page.scss'
 
                     <v-row class="d-flex justify-center">
                         <div>
-                        <v-img src="../assets/images/faked-logo.png" alt="logo" width="60" class="mt-16 ms-12"></v-img>
+                        <v-img src="../assets/images/faked-logo.png" alt="logo" width="60" class="mt-10 ms-12"></v-img>
                         </div>
                     </v-row>
                     
