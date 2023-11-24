@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import '~/assets/styles/header.scss'
+import '~/assets/styles/main-page.scss'
+const getLink = (item:string):string=>{
+    switch(item){
+        case 'Home':
+            return '/main-page'
+        case 'UAV':
+            return '/uav'
+        default:
+            return '/main-page'
+    }
+}
 </script>
 
 <template>
     <div class="header-layout">
         <v-app>
-            <v-layout>
                 <v-app-bar height="100">
                     <template v-slot:prepend>
                         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
@@ -22,13 +31,15 @@ import '~/assets/styles/header.scss'
                     <template v-slot:extension >
                         <v-row class="d-flex justify-center">
                             <div
-                            v-for="item in ['HOME', 'UAV', 'CCP', 'PRODUCT', 'NEWS']"
-                            :key="item"
-                            class="ma-2 pa-2 text-center "
+                                v-for="item in ['HOME', 'UAV', 'CCP', 'PRODUCT', 'NEWS']"
+                                :key="item"
+                                class="ma-2 pa-2 text-center "
                             >
-                            <v-btn>
-                                {{ item }}
-                            </v-btn>
+                                <router-link :to="getLink(item)" style="color: black;">
+                                    <v-btn>
+                                        {{ item }}
+                                    </v-btn>
+                                </router-link>
                             </div>
                         </v-row>
                     </template>
@@ -47,7 +58,6 @@ import '~/assets/styles/header.scss'
                         <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                 </v-app-bar>
-            </v-layout>
             <slot/>
         </v-app>
     </div>
