@@ -1,10 +1,14 @@
-v-app-bar {
-    height: 15vh;
+.v-app-bar {
+    height: 20vh;
 }
 
 .header-img {
     width: 25px;
 };
+
+.header-logo {
+    margin-top: 16vh;
+}
 
 .header-layout {
     position: relative;
@@ -12,9 +16,5 @@ v-app-bar {
 
 .main-container {
     position: absolute;
-    top: 15vh;
+    top: 23vh;
 }
-
-
-
-

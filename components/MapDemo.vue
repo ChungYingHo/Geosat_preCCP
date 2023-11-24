@@ -7,10 +7,11 @@ const rotation = ref(0)
 </script>
 
 <template>
+  <div>
     <ol-map
       :loadTilesWhileAnimating="true"
       :loadTilesWhileInteracting="true"
-      style="height: 100vh"
+      style="height: calc(100vh - 15vh)"
     >
       <ol-view
         ref="view"
@@ -24,7 +25,8 @@ const rotation = ref(0)
         <ol-source-osm />
       </ol-tile-layer>
     </ol-map>
-  </template>
+  </div>
+</template>
 
 <style scoped>
 @import 'vue3-openlayers/dist/vue3-openlayers.css';
