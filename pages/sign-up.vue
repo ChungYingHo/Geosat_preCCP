@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useSignStore } from '#imports';
+const store = useSignStore()
 // page setting
 definePageMeta({
     layout: 'sign-in-up'
@@ -22,6 +24,8 @@ const checkedVisible = ref(false)
                 placeholder="Enter your name"
                 prepend-inner-icon="mdi-account-outline"
                 variant="outlined"
+                :rules="[store.rules.required, store.rules.counter]"
+                v-model="store.name"
             ></v-text-field>
         
             <div class="text-subtitle-1 text-medium-emphasis">Account</div>
@@ -30,6 +34,8 @@ const checkedVisible = ref(false)
                 placeholder="Email address"
                 prepend-inner-icon="mdi-email-outline"
                 variant="outlined"
+                :rules="[store.rules.email, store.rules.required]"
+                v-model="store.email"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis">
@@ -43,6 +49,8 @@ const checkedVisible = ref(false)
                 prepend-inner-icon="mdi-lock-outline"
                 variant="outlined"
                 @click:append-inner="visible = !visible"
+                :rules="[store.rules.required, store.rules.counter]"
+                v-model="store.password"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis">
@@ -56,6 +64,8 @@ const checkedVisible = ref(false)
                 prepend-inner-icon="mdi-lock-outline"
                 variant="outlined"
                 @click:append-inner="checkedVisible = !checkedVisible"
+                :rules="[store.rules.required]"
+                v-model="store.checkedPassword"
             ></v-text-field>
 
             <v-btn
@@ -64,6 +74,7 @@ const checkedVisible = ref(false)
                 color="blue"
                 size="large"
                 variant="tonal"
+                @click="store.handleSubmit"
             >
                 Submit
             </v-btn>

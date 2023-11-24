@@ -41,3 +41,12 @@
         object-fit: cover;
     }
 }
+
+.sign-lang-select{
+    color: #2196f3;
+    padding: 0.2rem;
+
+    &:focus{
+        outline: lightgray solid 1px;
+    }
+}

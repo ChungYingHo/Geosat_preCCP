@@ -6,6 +6,9 @@ definePageMeta({
     layout: 'sign-in-up'
 })
 const visible = ref(false)
+const route = useRoute()
+
+console.log(route.path)
 </script>
 
 <template>
@@ -71,12 +74,11 @@ const visible = ref(false)
                 >
                 Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
                 </RouterLink>
-                <a
-                    class="text-blue text-decoration-none"
-                    href="#"
+                <select
+                    class="sign-lang-select"
                 >
-                Change Language
-                </a>
+                    <option>Change Language</option>
+                </select>
             </v-card-text>
         </v-card>
     </div>
