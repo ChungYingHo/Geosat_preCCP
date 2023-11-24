@@ -28,6 +28,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    @media screen and (max-width: 850px){
+        width: 90%;
+    }
 }
 
 .sign-btn{
@@ -39,5 +43,17 @@
     & img{
         width: 2rem;
         object-fit: cover;
+    }
+    &:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.sign-lang-select{
+    color: #2196f3;
+    padding: 0.2rem;
+
+    &:focus{
+        outline: lightgray solid 1px;
     }
 }

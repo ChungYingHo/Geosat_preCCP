@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+import { useSignStore } from '#imports';
+const store = useSignStore()
 // page setting
 definePageMeta({
     layout: 'sign-in-up'
@@ -16,7 +19,8 @@ const visible = ref(false)
             <v-img
                 src="~/assets/images/faked-logo.png"
                 width="8rem"
-                class="mx-auto"></v-img>
+                class="mx-auto">
+            </v-img>
 
             <div class="text-subtitle-1 text-medium-emphasis">Login with...</div>
             <button class="sign-btn"><img src="~/assets/images/google.png"></button>
@@ -29,6 +33,8 @@ const visible = ref(false)
                 placeholder="Email address"
                 prepend-inner-icon="mdi-email-outline"
                 variant="outlined"
+                :rules="[store.rules.required]"
+                v-model="store.loginEmail"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -50,6 +56,8 @@ const visible = ref(false)
                 prepend-inner-icon="mdi-lock-outline"
                 variant="outlined"
                 @click:append-inner="visible = !visible"
+                :rules="[store.rules.required]"
+                v-model="store.loginPassword"
             ></v-text-field>
 
             <v-btn
@@ -58,27 +66,23 @@ const visible = ref(false)
                 color="blue"
                 size="large"
                 variant="tonal"
+                @click="store.handleSubmit('/login')"
             >
                 Log In
             </v-btn>
 
             <v-card-text class="d-flex justify-space-between">
-                <a
+                <RouterLink
+                    to="/sign-up"
                     class="text-blue text-decoration-none"
-                    href="#"
-                    rel="noopener noreferrer"
-                    target="_blank"
                 >
                 Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
-                </a>
-                <a
-                    class="text-blue text-decoration-none"
-                    href="#"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                </RouterLink>
+                <select
+                    class="sign-lang-select"
                 >
-                Change Language
-                </a>
+                    <option>Change Language</option>
+                </select>
             </v-card-text>
         </v-card>
     </div>

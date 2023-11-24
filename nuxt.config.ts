@@ -11,6 +11,17 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: [
+          // 自動引入 `defineStore()`
+          'defineStore',
+          // 自動引入 `defineStore()` 并重新命名為 `definePiniaStore()`
+          ['defineStore', 'definePiniaStore'],
+        ],
+      },
+    ],
   ],
   vite: {
     vue: {
