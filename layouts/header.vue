@@ -15,10 +15,8 @@ const getLink = (item:string):string=>{
 <template>
     <div class="header-layout">
         <v-app>
-
                 <v-app-bar>
                     <template v-slot:prepend>
-                        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
                         <v-btn icon>
                             <img class="header-img" src="../assets/images/facebook1.png" alt="facebook">
                         </v-btn>
