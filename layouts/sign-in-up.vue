@@ -5,7 +5,6 @@ import '~/assets/styles/sign-in-up.scss'
 <template>
     <v-app>
         <div class="sign-layout">
-            <h1>hello</h1>
             <slot />
         </div>
     </v-app>
