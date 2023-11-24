@@ -21,8 +21,9 @@ const visible = ref(false)
             rounded="lg"
         >
             <div class="text-subtitle-1 text-medium-emphasis">Login with...</div>
-            <!-- todo 2023.11.23 做到這裡 -->
-            <v-btn icon="~/assets/images/google.png"></v-btn>
+            <button class="sign-btn"><img src="~/assets/images/google.png"></button>
+            <button class="sign-btn"><img src="~/assets/images/facebook.png"></button>
+            <button class="sign-btn"><img src="~/assets/images/twitch.png"></button>
 
             <div class="text-subtitle-1 text-medium-emphasis">Account</div>
             <v-text-field
