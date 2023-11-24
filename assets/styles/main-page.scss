@@ -1,7 +1,16 @@
-img {
+.v-app-bar {
+    height: 15vh;
+}
+
+.header-img {
     width: 25px;
 };
 
+.header-layout {
+    position: relative;
+}
 
-
-
+.main-container {
+    position: absolute;
+    margin-top: 18vh;
+}
