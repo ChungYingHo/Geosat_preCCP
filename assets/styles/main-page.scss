@@ -1,22 +1,19 @@
-.v-app-bar {
-    min-height: 20vh;
-}
-
-.v-btn .header-img {
-    width: 25px;
-};
-
-.header-logo {
-    margin-top: 16vh;
-}
-
+// todo layout's style
 .header-layout {
     position: relative;
-}
 
-.main-container {
-    position: absolute;
-    top: 20vh;
+    .v-app-bar {
+        min-height: 20vh;
+    }
+
+    .v-btn .header-img {
+        width: 25px;
+    }
+
+    .v-footer{
+        width: 100vw;
+        padding: 0;
+    }
 }
 
 .header-link {
@@ -24,6 +21,10 @@
 }
 
 
+// todo main page style
+.main-container {
+    margin-top: 20vh;
+}
 
 .main-page-row {
     display: flex;

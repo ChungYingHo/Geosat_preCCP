@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import { reactive } from 'vue';
 // page setting
 definePageMeta({
-    layout: 'main-page'
+    layout: 'header'
 })
-
-import { reactive } from 'vue';
 
 const state = reactive({
   items: [
