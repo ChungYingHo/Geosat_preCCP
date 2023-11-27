@@ -16,17 +16,19 @@
 
 .main-container {
     position: absolute;
-    top: 21.5vh;
+    top: 20vh;
 }
 
 .header-link {
     color: black;
 }
 
+
+
 .main-page-row {
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 100vw;
-    
+    margin-top: 100px;
 }

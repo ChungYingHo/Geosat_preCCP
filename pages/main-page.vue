@@ -4,19 +4,39 @@ definePageMeta({
     layout: 'header'
 })
 
+import { reactive } from 'vue';
+
+const state = reactive({
+  items: [
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+    },
+  ],
+});
+
 </script>
 
 
 <template>
   <div class="main-container">
-      <!-- <v-carousel hide-delimiters>
-      <v-carousel-item
-        v-for="(item,i) in items"
-        :key="i"
-        :src="item.src"
-        cover
-      ></v-carousel-item>
-    </v-carousel> -->
+    <v-carousel hide-delimiters style="height: 70vh;">
+    <v-carousel-item
+      v-for="(item, i) in state.items"
+      :key="i"
+      :src="item.src"
+      cover
+    ></v-carousel-item>
+  </v-carousel>
+
     <div class="main-page-row">
         <v-card
             class="mx-auto"
