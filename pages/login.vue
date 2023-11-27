@@ -12,53 +12,65 @@ const visible = ref(false)
 <template>
     <div class="sign-container">
         <v-card
-            class="pa-4 pb-2"
+            class="pa-4 pb-2 d-flex flex-column ga-3"
             elevation="8"
             rounded="lg"
+            height="80%"
         >
             <v-img
                 src="~/assets/images/faked-logo.png"
-                width="8rem"
+                width="12rem"
                 class="mx-auto">
             </v-img>
 
-            <div class="text-subtitle-1 text-medium-emphasis">Login with...</div>
-            <button class="sign-btn"><img src="~/assets/images/google.png"></button>
-            <button class="sign-btn"><img src="~/assets/images/facebook.png"></button>
-            <button class="sign-btn"><img src="~/assets/images/twitch.png"></button>
-
-            <div class="text-subtitle-1 text-medium-emphasis">Account</div>
-            <v-text-field
-                density="compact"
-                placeholder="Email address"
-                prepend-inner-icon="mdi-email-outline"
-                variant="outlined"
-                :rules="[store.rules.required]"
-                v-model="store.loginEmail"
-            ></v-text-field>
-
-            <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                Password
-
-                <a
-                    class="text-caption text-decoration-none text-blue"
-                    href="#"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
-                Forgot login password?</a>
+            <div>
+                <div class="text-h5 text-medium-emphasis mb-2">Login with...</div>
+                <v-btn icon>
+                    <img src="~/assets/images/google.png" alt="Google">
+                </v-btn>
+                <v-btn icon>
+                    <img src="~/assets/images/facebook.png" alt="Facebook">
+                </v-btn>
+                <v-btn icon>
+                    <img src="~/assets/images/twitch.png" alt="Twitch">
+                </v-btn>
             </div>
-            <v-text-field
-                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                :type="visible ? 'text' : 'password'"
-                density="compact"
-                placeholder="Enter your password"
-                prepend-inner-icon="mdi-lock-outline"
-                variant="outlined"
-                @click:append-inner="visible = !visible"
-                :rules="[store.rules.required]"
-                v-model="store.loginPassword"
-            ></v-text-field>
+
+            <div>
+                <div class="text-h5 text-medium-emphasis mb-1">Account</div>
+                <v-text-field
+                    density="comfortable"
+                    placeholder="Email address"
+                    prepend-inner-icon="mdi-email-outline"
+                    variant="outlined"
+                    :rules="[store.rules.required]"
+                    v-model="store.loginEmail"
+                ></v-text-field>
+            </div>
+
+            <div>
+                <div class="text-h5 text-medium-emphasis mb-1 d-flex align-center justify-space-between">
+                    Password
+                    <a
+                        class="text-subtitle-2 text-decoration-none text-blue"
+                        href="#"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >
+                    Forgot login password?</a>
+                </div>
+                <v-text-field
+                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'"
+                    density="comfortable"
+                    placeholder="Enter your password"
+                    prepend-inner-icon="mdi-lock-outline"
+                    variant="outlined"
+                    @click:append-inner="visible = !visible"
+                    :rules="[store.rules.required]"
+                    v-model="store.loginPassword"
+                ></v-text-field>
+            </div>
 
             <v-btn
                 block
@@ -71,7 +83,7 @@ const visible = ref(false)
                 Log In
             </v-btn>
 
-            <v-card-text class="d-flex justify-space-between">
+            <v-card-text class="text-subtitle-1 d-flex justify-space-between align-center">
                 <RouterLink
                     to="/sign-up"
                     class="text-blue text-decoration-none"
