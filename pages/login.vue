@@ -12,19 +12,19 @@ const visible = ref(false)
 <template>
     <div class="sign-container">
         <v-card
-            class="pa-4 pb-2 d-flex flex-column ga-3"
+            class="pa-8 pb-2 d-flex flex-column justify-space-between"
             elevation="8"
             rounded="lg"
             height="80%"
         >
             <v-img
                 src="~/assets/images/faked-logo.png"
-                width="12rem"
+                width="10rem"
                 class="mx-auto">
             </v-img>
 
-            <div>
-                <div class="text-h5 text-medium-emphasis mb-2">Login with...</div>
+            <div class="mb-3">
+                <div class="text-h6 text-medium-emphasis mb-2">Login with...</div>
                 <v-btn icon>
                     <img src="~/assets/images/google.png" alt="Google">
                 </v-btn>
@@ -37,7 +37,7 @@ const visible = ref(false)
             </div>
 
             <div>
-                <div class="text-h5 text-medium-emphasis mb-1">Account</div>
+                <div class="text-h6 text-medium-emphasis mb-1">Account</div>
                 <v-text-field
                     density="comfortable"
                     placeholder="Email address"
@@ -49,7 +49,7 @@ const visible = ref(false)
             </div>
 
             <div>
-                <div class="text-h5 text-medium-emphasis mb-1 d-flex align-center justify-space-between">
+                <div class="text-h6 text-medium-emphasis mb-1 d-flex align-center justify-space-between">
                     Password
                     <a
                         class="text-subtitle-2 text-decoration-none text-blue"
@@ -74,7 +74,7 @@ const visible = ref(false)
 
             <v-btn
                 block
-                class="mb-1"
+                class="mb-1 flex-grow-0"
                 color="blue"
                 size="large"
                 variant="tonal"
@@ -83,7 +83,7 @@ const visible = ref(false)
                 Log In
             </v-btn>
 
-            <v-card-text class="text-subtitle-1 d-flex justify-space-between align-center">
+            <v-card-text class="text-subtitle-1 d-flex justify-space-between align-center flex-grow-0">
                 <RouterLink
                     to="/sign-up"
                     class="text-blue text-decoration-none"
