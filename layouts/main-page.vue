@@ -26,7 +26,6 @@ const store = useHeaderStore()
                 <template v-slot:append>
                     <v-btn icon="mdi-magnify"></v-btn>
                     <v-btn icon="mdi-account"></v-btn>
-<<<<<<< HEAD
                     <!-- <v-btn icon="mdi-export"></v-btn> -->
                     <nuxt-link to="/login" class="header-link">
                     <v-btn icon>
@@ -34,9 +33,6 @@ const store = useHeaderStore()
                     </v-btn>
                     </nuxt-link>
 
-=======
-                    <v-btn icon="mdi-export"></v-btn>
->>>>>>> 4c30fdfb576b19155f87179b4f6d99ae6c497ac4
                 </template>
                 <template v-slot:extension >
                     <v-row class="d-flex justify-center">
