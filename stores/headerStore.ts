@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 
+
 export const useHeaderStore = defineStore('header', ()=>{
     const getLink = (item: string): string =>{
         switch (item) {
@@ -23,4 +24,8 @@ export const useHeaderStore = defineStore('header', ()=>{
       getLink,
       icons
     }
+
 });
+
+
+
