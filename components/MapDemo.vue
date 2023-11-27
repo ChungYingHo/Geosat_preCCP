@@ -7,11 +7,11 @@ const rotation = ref(0)
 </script>
 
 <template>
-  <div>
+  <div class="main-container">
     <ol-map
       :loadTilesWhileAnimating="true"
       :loadTilesWhileInteracting="true"
-      style="height: calc(100vh - 15vh)"
+      style="height: calc(100vh - 26.5vh); width: 100vw;"
     >
       <ol-view
         ref="view"
