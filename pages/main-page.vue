@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // page setting
 definePageMeta({
-    layout: 'header'
+    layout: 'main-page'
 })
 
 import { reactive } from 'vue';
