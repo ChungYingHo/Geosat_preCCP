@@ -32,9 +32,7 @@ const getLink = (item:string):string=>{
                 </v-spacer>
                 <template v-slot:append>
                     <v-btn icon="mdi-magnify"></v-btn>
-                    <v-btn icon>
-                        <img class="header-img" src="../assets/images/user.png" alt="user">
-                    </v-btn>
+                    <v-btn icon="mdi-account"></v-btn>
                     <v-btn icon="mdi-export"></v-btn>
                 </template>
                 <template v-slot:extension >
