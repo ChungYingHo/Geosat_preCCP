@@ -2,7 +2,7 @@
     min-height: 20vh;
 }
 
-.header-img {
+.v-btn .header-img {
     width: 25px;
 };
 
@@ -16,5 +16,17 @@
 
 .main-container {
     position: absolute;
-    top: 26.5vh;
+    top: 21.5vh;
+}
+
+.header-link {
+    color: black;
+}
+
+.main-page-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    
 }

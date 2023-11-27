@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import '~/assets/styles/main-page.scss'
-const getLink = (item:string):string=>{
-    switch(item){
-        case 'Home':
-            return '/main-page'
-        case 'UAV':
-            return '/uav'
-        default:
-            return '/main-page'
-    }
-}
+import { useHeaderStore } from '#imports';
+const store = useHeaderStore()
+
 </script>
 
 <template>
@@ -32,10 +25,14 @@ const getLink = (item:string):string=>{
                 </v-spacer>
                 <template v-slot:append>
                     <v-btn icon="mdi-magnify"></v-btn>
+                    <v-btn icon="mdi-account"></v-btn>
+                    <!-- <v-btn icon="mdi-export"></v-btn> -->
+                    <nuxt-link to="/login" class="header-link">
                     <v-btn icon>
-                        <img class="header-img" src="../assets/images/user.png" alt="user">
+                        <v-icon>mdi-export</v-icon>
                     </v-btn>
-                    <v-btn icon="mdi-export"></v-btn>
+                    </nuxt-link>
+
                 </template>
                 <template v-slot:extension >
                     <v-row class="d-flex justify-center">
@@ -44,7 +41,7 @@ const getLink = (item:string):string=>{
                             :key="item"
                             class="ma-2 pa-2 text-center "
                         >
-                            <router-link :to="getLink(item)" style="color: black;">
+                            <router-link :to="store.getLink(item)" style="color: black;">
                                 <v-btn>
                                     {{ item }}
                                 </v-btn>
