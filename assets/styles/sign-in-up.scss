@@ -34,18 +34,10 @@
     }
 }
 
-.sign-btn{
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
+.v-btn{
     margin-right: 1.5rem;
-    margin-top: 0.5rem;
-    & img{
-        width: 2rem;
-        object-fit: cover;
-    }
-    &:hover {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    img{
+        width: 3rem;
     }
 }
 
