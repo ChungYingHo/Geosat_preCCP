@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import { useSignStore } from '#imports';
-const store = useSignStore()
-// page setting
+import { useLocale } from '~/composables/useLocale'
+
 definePageMeta({
     layout: 'sign-in-up'
 })
+const store = useSignStore()
 const visible = ref(false)
+const { localePath, switchLocalePath } = useLocale()
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const visible = ref(false)
             </v-img>
 
             <div class="mb-3">
-                <div class="text-h6 text-medium-emphasis mb-2">Login with...</div>
+                <div class="text-h6 text-medium-emphasis mb-2">{{$t('sign.msg.loginTitle')}}</div>
                 <v-btn icon>
                     <img src="~/assets/images/google.png" alt="Google">
                 </v-btn>
@@ -37,10 +39,10 @@ const visible = ref(false)
             </div>
 
             <div>
-                <div class="text-h6 text-medium-emphasis mb-1">Account</div>
+                <div class="text-h6 text-medium-emphasis mb-1">{{$t('sign.account')}}</div>
                 <v-text-field
                     density="comfortable"
-                    placeholder="Email address"
+                    :placeholder="$t('sign.msg.accountPlace')"
                     prepend-inner-icon="mdi-email-outline"
                     variant="outlined"
                     :rules="[store.rules.required]"
@@ -50,20 +52,20 @@ const visible = ref(false)
 
             <div>
                 <div class="text-h6 text-medium-emphasis mb-1 d-flex align-center justify-space-between">
-                    Password
+                    {{$t('sign.password')}}
                     <a
                         class="text-subtitle-2 text-decoration-none text-blue"
                         href="#"
                         rel="noopener noreferrer"
                         target="_blank"
                     >
-                    Forgot login password?</a>
+                    {{$t('sign.msg.forgotPassword')}}</a>
                 </div>
                 <v-text-field
                     :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="visible ? 'text' : 'password'"
                     density="comfortable"
-                    placeholder="Enter your password"
+                    :placeholder="$t('sign.msg.passwordPlace')"
                     prepend-inner-icon="mdi-lock-outline"
                     variant="outlined"
                     @click:append-inner="visible = !visible"
@@ -80,21 +82,23 @@ const visible = ref(false)
                 variant="tonal"
                 @click="store.handleSubmit('/login')"
             >
-                Log In
+            {{$t('sign.login')}}
             </v-btn>
 
             <v-card-text class="text-subtitle-1 d-flex justify-space-between align-center flex-grow-0">
                 <RouterLink
-                    to="/sign-up"
+                    :to='localePath("/sign-up")'
                     class="text-blue text-decoration-none"
                 >
-                Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
+                    {{$t('sign.msg.signUpNow')}}
+                    <v-icon icon="mdi-chevron-right"></v-icon>
                 </RouterLink>
-                <select
+                <div
                     class="sign-lang-select"
                 >
-                    <option>Change Language</option>
-                </select>
+                    <NuxtLink :to="switchLocalePath('zh')">繁體中文</NuxtLink>
+                    <NuxtLink :to="switchLocalePath('en')">English</NuxtLink>
+                </div>
             </v-card-text>
         </v-card>
     </div>

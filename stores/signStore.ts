@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import { useLocale } from '~/composables/useLocale'
 
 export const useSignStore = defineStore('Sign_', ()=>{
     // sweetalert2 引用
@@ -13,6 +14,9 @@ export const useSignStore = defineStore('Sign_', ()=>{
           toast.onmouseleave = Swal.resumeTimer;
         }
       })
+
+    // i18n import
+    const { localePath, switchLocalePath } = useLocale()
 
     // 使用者登入資料
     const loginEmail = ref('')
@@ -30,7 +34,9 @@ export const useSignStore = defineStore('Sign_', ()=>{
         counter: (value: string) => value.length <= 10 || 'Max 10 characters',
         email: (value: string) => pattern.test(value) || 'Invalid e-mail.',
     }
-    const handleSubmit = (path:string)=>{
+    const handleSubmit = async (path:string)=>{
+        const localizedPath = await switchLocalePath(path)
+
         if(path === ('/login')){
             if(loginEmail.value.length > 0 && loginPassword.value.length > 0){
                 Toast.fire({
@@ -63,9 +69,6 @@ export const useSignStore = defineStore('Sign_', ()=>{
             }
         }
     }
-
-    
-      
 
     return{
         loginEmail,

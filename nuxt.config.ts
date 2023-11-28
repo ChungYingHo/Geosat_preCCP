@@ -5,12 +5,14 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
   modules: [
+    // todo vuetify
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
+    // todo pinia
     [
       '@pinia/nuxt',
       {
@@ -22,6 +24,8 @@ export default defineNuxtConfig({
         ],
       },
     ],
+    // todo i18n
+    '@nuxtjs/i18n'
   ],
   vite: {
     vue: {
@@ -29,5 +33,28 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+  },
+  // todo i18n setting
+  i18n: {
+    strategy: 'prefix',
+    langDir: 'locales',
+    locales: [
+      {
+        code: 'en',
+        iso: 'en-US',
+        file: 'en.ts'
+      },
+      {
+        code: 'zh',
+        iso: 'zh-TW',
+        file: 'zh.ts'
+      }
+    ],
+    defaultLocale: 'zh',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root'
+    }
   }
 })
