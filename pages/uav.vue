@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const {localePath} = useLocale()
 </script>
 
 <template>
@@ -23,19 +23,19 @@
                     <v-list density="comfortable" nav>
                         <v-list-item
                             prepend-icon="mdi-layers"
-                            title="Layers"
+                            :title="$t('UAV.layers')"
                             value="layers"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-note-edit"
-                            title="Edit"
+                            :title="$t('UAV.edit')"
                             value="edit"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-rotate-left"
-                            title="Reset"
+                            :title="$t('UAV.reset')"
                             value="Reset"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-folder"
-                            title="Project"
+                            :title="$t('UAV.project')"
                             value="project"></v-list-item>
                     </v-list>
 
@@ -44,22 +44,22 @@
                     <v-list density="comfortable" nav>
                         <v-list-item
                             prepend-icon="mdi-home"
-                            title="Home"
+                            :title="$t('main.header.HOME')"
                             value="home"
                             to="/main-page"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-laptop"
-                            title="CCP"
+                            :title="$t('main.header.CCP')"
                             value="ccp"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-cog"
-                            title="Setting"
+                            :title="$t('main.setting')"
                             value="setting"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-export"
-                            title="Logout"
+                            :title="$t('main.logout')"
                             value="logout"
-                            to="/login"></v-list-item>
+                            :to="localePath('/')"></v-list-item>
                     </v-list>
                 </v-navigation-drawer>
 

@@ -23,10 +23,11 @@ export default {
         header: {
             HOME: 'Home',
             UAV: 'UAV',
-            CCP: 'UAV',
+            CCP: 'CCP',
             PRODUCT: 'Product',
             NEWS: 'News',
         },
+
         cardTitle:'Top 10 Australian beaches', 
         subTitle:'Number 10',
         cardText:'Whitehaven Beach',
@@ -35,4 +36,10 @@ export default {
         explore:'explore',
         footertitle:'Get connected with us on social networks!',
     },
+    UAV: {
+        layers: 'Layers',
+        edit: 'Edit',
+        reset: 'Reset',
+        project: 'Project'
+    }
   }

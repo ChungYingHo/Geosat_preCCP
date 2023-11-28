@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useSignStore } from '#imports';
-import { useLocale } from '~/composables/useLocale'
-
 definePageMeta({
     layout: 'sign-in-up'
 })
@@ -92,7 +89,7 @@ const checkedVisible = ref(false)
 
             <v-card-text class="text-subtitle-1 d-flex justify-start flex-grow-0">
                 <RouterLink
-                    :to="localePath('/login')"
+                    :to="localePath('/')"
                     class="text-blue text-decoration-none"
                 >
                     {{$t('sign.back')}}

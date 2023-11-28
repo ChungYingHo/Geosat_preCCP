@@ -13,10 +13,6 @@ const { localePath, switchLocalePath } = useLocale()
         <v-app>
             <v-app-bar>
                 <template v-slot:prepend>
-                    <div class="sign-lang-select">
-                        <NuxtLink class="language-change" :to="switchLocalePath('zh')">繁體中文 | </NuxtLink>
-                        <NuxtLink class="language-change" :to="switchLocalePath('en')">English</NuxtLink>
-                    </div>
                     <v-btn icon>
                         <img class="header-img" src="../assets/images/facebook1.png" alt="facebook">
                     </v-btn>
@@ -33,12 +29,11 @@ const { localePath, switchLocalePath } = useLocale()
                 <template v-slot:append>
                     <v-btn icon="mdi-magnify"></v-btn>
                     <v-btn icon="mdi-account"></v-btn>
-                    <!-- <v-btn icon="mdi-export"></v-btn> -->
-                    <nuxt-link to="/login" class="header-link">
-                    <v-btn icon>
-                        <v-icon>mdi-export</v-icon>
-                    </v-btn>
-                    </nuxt-link>
+                    <NuxtLinkLocale to="/" class="header-link">
+                        <v-btn icon>
+                            <v-icon>mdi-export</v-icon>
+                        </v-btn>
+                    </NuxtLinkLocale>
 
                 </template>
                 <template v-slot:extension >
@@ -48,11 +43,11 @@ const { localePath, switchLocalePath } = useLocale()
                             :key="item"
                             class="ma-2 pa-2 text-center "
                         >
-                            <router-link :to="store.getLink(item)" style="color: black;">
+                            <NuxtLinkLocale :to="store.getLink(item)" style="color: black;">
                                 <v-btn>
                                     {{ $t(`main.header.${item}`) }}
                                 </v-btn>
-                            </router-link>
+                            </NuxtLinkLocale>
                         </div>
                     </v-row>
                 </template>

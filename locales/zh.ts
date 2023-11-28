@@ -26,8 +26,10 @@ export default {
             CCP:'雲端計算平台',
             PRODUCT:'產品',
             NEWS:'新聞',
-        },  
-        cardTitle:'澳洲十大海灘', 
+        },
+        logout: '登出',
+        setting: '設定',
+        cardTitle:'澳洲十大海灘',
         subTitle:'10號',
         cardText:'白天堂海灘',
         textContent:'UAV主要功能為影像計算 攝影量技術。',
@@ -35,4 +37,10 @@ export default {
         explore:'探索',
         footertitle:'在社交網路上與我們聯繫！',
     },
+    UAV: {
+        layers: '圖層',
+        edit: '編輯',
+        reset: '重置',
+        project: '專案'
+    }
   }

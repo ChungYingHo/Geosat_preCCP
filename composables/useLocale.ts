@@ -4,6 +4,6 @@ export function useLocale() {
   
     return {
       localePath,
-      switchLocalePath,
+      switchLocalePath
     };
 }
