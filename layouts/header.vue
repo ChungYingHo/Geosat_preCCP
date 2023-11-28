@@ -13,10 +13,6 @@ const { localePath, switchLocalePath } = useLocale()
         <v-app>
             <v-app-bar>
                 <template v-slot:prepend>
-                    <div class="sign-lang-select">
-                        <NuxtLink class="language-change" :to="switchLocalePath('zh')">繁體中文 | </NuxtLink>
-                        <NuxtLink class="language-change" :to="switchLocalePath('en')">English</NuxtLink>
-                    </div>
                     <v-btn icon>
                         <img class="header-img" src="../assets/images/facebook1.png" alt="facebook">
                     </v-btn>

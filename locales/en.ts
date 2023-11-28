@@ -23,11 +23,13 @@ export default {
         header: {
             HOME: 'Home',
             UAV: 'UAV',
-            CCP: 'UAV',
+            CCP: 'CCP',
             PRODUCT: 'Product',
             NEWS: 'News',
         },
-        cardTitle:'澳洲十大海灘', 
+        logout: 'Log out',
+        setting: 'Setting',
+        cardTitle:'澳洲十大海灘',
         subTitle:'10號',
         cardText:'白天堂海灘',
         textContent:'UAV主要功能為影像計算 攝影量技術。',
@@ -35,4 +37,10 @@ export default {
         explore:'探索',
         footertitle:'Get connected with us on social networks!',
     },
+    UAV: {
+        layers: 'Layers',
+        edit: 'Edit',
+        reset: 'Reset',
+        project: 'Project'
+    }
   }
