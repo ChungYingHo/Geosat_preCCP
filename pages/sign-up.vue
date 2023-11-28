@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useSignStore } from '#imports';
-import { useLocale } from '~/composables/useLocale'
-
 definePageMeta({
     layout: 'sign-in-up'
 })

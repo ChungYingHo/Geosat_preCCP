@@ -26,12 +26,11 @@ const store = useHeaderStore()
                 <template v-slot:append>
                     <v-btn icon="mdi-magnify"></v-btn>
                     <v-btn icon="mdi-account"></v-btn>
-                    <!-- <v-btn icon="mdi-export"></v-btn> -->
-                    <nuxt-link to="/" class="header-link">
-                    <v-btn icon>
-                        <v-icon>mdi-export</v-icon>
-                    </v-btn>
-                    </nuxt-link>
+                    <NuxtLinkLocale to="/" class="header-link">
+                        <v-btn icon>
+                            <v-icon>mdi-export</v-icon>
+                        </v-btn>
+                    </NuxtLinkLocale>
 
                 </template>
                 <template v-slot:extension >
@@ -41,11 +40,11 @@ const store = useHeaderStore()
                             :key="item"
                             class="ma-2 pa-2 text-center "
                         >
-                            <router-link :to="store.getLink(item)" style="color: black;">
+                            <NuxtLinkLocale :to="store.getLink(item)" style="color: black;">
                                 <v-btn>
                                     {{ item }}
                                 </v-btn>
-                            </router-link>
+                            </NuxtLinkLocale>
                         </div>
                     </v-row>
                 </template>

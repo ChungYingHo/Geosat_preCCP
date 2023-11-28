@@ -44,8 +44,9 @@
 .sign-lang-select{
     color: #2196f3;
     padding: 0.2rem;
+    text-align: center;
 
     &:focus{
-        outline: lightgray solid 1px;
+        outline: transparent solid 1px;
     }
 }

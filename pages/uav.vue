@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const {localePath} = useLocale()
 </script>
 
 <template>
@@ -59,7 +59,7 @@
                             prepend-icon="mdi-export"
                             title="Logout"
                             value="logout"
-                            to="/"></v-list-item>
+                            :to="localePath('/')"></v-list-item>
                     </v-list>
                 </v-navigation-drawer>
 

@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { useSignStore } from '#imports';
-import { useLocale } from '~/composables/useLocale'
-
 definePageMeta({
     layout: 'sign-in-up'
 })
-const store = useSignStore()
+const signStore = useSignStore()
+const mainStore = useMainStore()
 const visible = ref(false)
 const { localePath, switchLocalePath } = useLocale()
+const router = useRouter()
 </script>
 
 <template>
@@ -45,8 +43,8 @@ const { localePath, switchLocalePath } = useLocale()
                     :placeholder="$t('sign.msg.accountPlace')"
                     prepend-inner-icon="mdi-email-outline"
                     variant="outlined"
-                    :rules="[store.rules.required]"
-                    v-model="store.loginEmail"
+                    :rules="[signStore.rules.required]"
+                    v-model="signStore.loginEmail"
                 ></v-text-field>
             </div>
 
@@ -69,8 +67,8 @@ const { localePath, switchLocalePath } = useLocale()
                     prepend-inner-icon="mdi-lock-outline"
                     variant="outlined"
                     @click:append-inner="visible = !visible"
-                    :rules="[store.rules.required]"
-                    v-model="store.loginPassword"
+                    :rules="[signStore.rules.required]"
+                    v-model="signStore.loginPassword"
                 ></v-text-field>
             </div>
 
@@ -80,7 +78,7 @@ const { localePath, switchLocalePath } = useLocale()
                 color="blue"
                 size="large"
                 variant="tonal"
-                @click="store.handleSubmit('/login')"
+                @click="signStore.handleSubmit('/login')"
             >
             {{$t('sign.login')}}
             </v-btn>
@@ -93,12 +91,20 @@ const { localePath, switchLocalePath } = useLocale()
                     {{$t('sign.msg.signUpNow')}}
                     <v-icon icon="mdi-chevron-right"></v-icon>
                 </RouterLink>
-                <div
+                <!-- <div
                     class="sign-lang-select"
                 >
                     <NuxtLink :to="switchLocalePath('zh')">繁體中文</NuxtLink>
                     <NuxtLink :to="switchLocalePath('en')">English</NuxtLink>
-                </div>
+                </div> -->
+                <select
+                    class="sign-lang-select"
+                    v-model="mainStore.currentLang"
+                    @change="mainStore.changeLocale">
+                    <option disabled value selected>Select Language</option>
+                    <option value="zh">繁體中文</option>
+                    <option value="en">English</option>
+                </select>
             </v-card-text>
         </v-card>
     </div>
