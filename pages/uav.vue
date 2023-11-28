@@ -59,7 +59,7 @@
                             prepend-icon="mdi-export"
                             title="Logout"
                             value="logout"
-                            to="/login"></v-list-item>
+                            to="/"></v-list-item>
                     </v-list>
                 </v-navigation-drawer>
 

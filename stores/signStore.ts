@@ -16,7 +16,7 @@ export const useSignStore = defineStore('Sign_', ()=>{
       })
 
     // i18n import
-    const { localePath, switchLocalePath } = useLocale()
+    const { localePath} = useLocale()
 
     // 使用者登入資料
     const loginEmail = ref('')
@@ -34,18 +34,14 @@ export const useSignStore = defineStore('Sign_', ()=>{
         counter: (value: string) => value.length <= 10 || 'Max 10 characters',
         email: (value: string) => pattern.test(value) || 'Invalid e-mail.',
     }
-    const handleSubmit = async (path:string)=>{
-        const localizedPath = await switchLocalePath(path)
-
+    const handleSubmit = (path:string)=>{
         if(path === ('/login')){
             if(loginEmail.value.length > 0 && loginPassword.value.length > 0){
                 Toast.fire({
                     icon: "success",
                     title: "Login successfully"
                 })
-                return navigateTo({
-                    path: '/main-page'
-                })
+                return navigateTo(localePath('/main-page'))
             }else{
                 Toast.fire({
                     icon: "error",
@@ -58,9 +54,7 @@ export const useSignStore = defineStore('Sign_', ()=>{
                     icon: "success",
                     title: "Signed up successfully"
                 })
-                return navigateTo({
-                    path: '/login'
-                })
+                return navigateTo(localePath('/'))
             }else{
                 Toast.fire({
                     icon: "error",

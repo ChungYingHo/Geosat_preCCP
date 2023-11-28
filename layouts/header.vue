@@ -27,7 +27,7 @@ const store = useHeaderStore()
                     <v-btn icon="mdi-magnify"></v-btn>
                     <v-btn icon="mdi-account"></v-btn>
                     <!-- <v-btn icon="mdi-export"></v-btn> -->
-                    <nuxt-link to="/login" class="header-link">
+                    <nuxt-link to="/" class="header-link">
                     <v-btn icon>
                         <v-icon>mdi-export</v-icon>
                     </v-btn>
