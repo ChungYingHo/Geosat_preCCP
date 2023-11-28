@@ -2,6 +2,9 @@
 import '~/assets/styles/main-page.scss'
 import { useHeaderStore } from '#imports';
 const store = useHeaderStore()
+// import { useLocale } from '~/composables/useLocale'
+
+const { localePath, switchLocalePath } = useLocale()
 
 </script>
 
@@ -10,6 +13,10 @@ const store = useHeaderStore()
         <v-app>
             <v-app-bar>
                 <template v-slot:prepend>
+                    <div class="sign-lang-select">
+                        <NuxtLink class="language-change" :to="switchLocalePath('zh')">繁體中文 | </NuxtLink>
+                        <NuxtLink class="language-change" :to="switchLocalePath('en')">English</NuxtLink>
+                    </div>
                     <v-btn icon>
                         <img class="header-img" src="../assets/images/facebook1.png" alt="facebook">
                     </v-btn>
@@ -42,7 +49,7 @@ const store = useHeaderStore()
                         >
                             <NuxtLinkLocale :to="store.getLink(item)" style="color: black;">
                                 <v-btn>
-                                    {{ item }}
+                                    {{ $t(`main.header.${item}`) }}
                                 </v-btn>
                             </NuxtLinkLocale>
                         </div>
@@ -52,7 +59,7 @@ const store = useHeaderStore()
             <slot/>
             <v-footer class="d-flex flex-column">
                 <div class="bg-teal d-flex w-100 align-center px-4">
-                <strong>Get connected with us on social networks!</strong>
+                <strong>{{$t('main.footertitle')}}</strong>
 
                 <v-spacer></v-spacer>
 

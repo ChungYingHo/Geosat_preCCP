@@ -19,4 +19,20 @@ export default {
         submit: '送出',
         back: '返回'
     },
+    main : {
+        header : {
+            HOME:'主頁',
+            UAV:'無人機',
+            CCP:'雲端計算平台',
+            PRODUCT:'產品',
+            NEWS:'新聞',
+        },  
+        cardTitle:'澳洲十大海灘', 
+        subTitle:'10號',
+        cardText:'白天堂海灘',
+        textContent:'UAV主要功能為影像計算 攝影量技術。',
+        share:'分享',
+        explore:'探索',
+        footertitle:'在社交網路上與我們聯繫！',
+    },
   }

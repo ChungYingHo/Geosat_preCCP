@@ -19,4 +19,20 @@ export default {
         submit: 'Submit',
         back: 'Back'
     },
+    main : {
+        header: {
+            HOME: 'Home',
+            UAV: 'UAV',
+            CCP: 'UAV',
+            PRODUCT: 'Product',
+            NEWS: 'News',
+        },
+        cardTitle:'澳洲十大海灘', 
+        subTitle:'10號',
+        cardText:'白天堂海灘',
+        textContent:'UAV主要功能為影像計算 攝影量技術。',
+        share:'分享',
+        explore:'探索',
+        footertitle:'Get connected with us on social networks!',
+    },
   }

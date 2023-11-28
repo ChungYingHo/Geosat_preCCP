@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
+// import { useLocale } from '~/composables/useLocale'
+
 // page setting
 definePageMeta({
     layout: 'header'
 })
-
+const { localePath, switchLocalePath } = useLocale()
 const state = reactive({
   items: [
     {
@@ -27,6 +29,7 @@ const state = reactive({
 
 <template>
   <div class="main-container">
+
     <v-carousel hide-delimiters style="height: 70vh;">
     <v-carousel-item
       v-for="(item, i) in state.items"
@@ -47,26 +50,26 @@ const state = reactive({
             src="../assets/images/drone-1080844_640.jpg"
             cover
             >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
+            <v-card-title>{{$t('main.cardTitle')}}</v-card-title>
             </v-img>
 
             <v-card-subtitle class="pt-4">
-            Number 10
+              {{$t('main.subTitle')}}
             </v-card-subtitle>
 
             <v-card-text>
-            <div>Whitehaven Beach</div>
+            <div>{{$t('main.cardText')}}</div>
 
-            <div>UAV主要功能為影像計算 攝影量技術。</div>
+            <div>{{$t('main.textContent')}}</div>
             </v-card-text>
 
             <v-card-actions>
             <v-btn color="orange">
-                Share
+              {{$t('main.share')}}
             </v-btn>
 
             <v-btn color="orange">
-                Explore
+              {{$t('main.explore')}}
             </v-btn>
             </v-card-actions>
         </v-card>   
@@ -82,26 +85,26 @@ const state = reactive({
             src="../assets/images/2023-0919 TADTE 11.jpg"
             cover
             >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
+            <v-card-title>{{$t('main.cardTitle')}}</v-card-title>
             </v-img>
 
             <v-card-subtitle class="pt-4">
-            Number 10
+              {{$t('main.subTitle')}}
             </v-card-subtitle>
 
             <v-card-text>
-            <div>Whitehaven Beach</div>
+            <div>{{$t('main.cardText')}}</div>
 
-            <div>UAV主要功能為影像計算 攝影量技術。</div>
+            <div>{{$t('main.textContent')}}</div>
             </v-card-text>
 
             <v-card-actions>
             <v-btn color="orange">
-                Share
+              {{$t('main.share')}}
             </v-btn>
 
             <v-btn color="orange">
-                Explore
+              {{$t('main.explore')}}
             </v-btn>
             </v-card-actions>
         </v-card>   
@@ -116,26 +119,26 @@ const state = reactive({
             src="../assets/images/drone-1866742_640.jpg"
             cover
             >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
+            <v-card-title>{{$t('main.cardTitle')}}</v-card-title>
             </v-img>
 
             <v-card-subtitle class="pt-4">
-            Number 10
+              {{$t('main.subTitle')}}
             </v-card-subtitle>
 
             <v-card-text>
-            <div>Whitehaven Beach</div>
+            <div>{{$t('main.cardText')}}</div>
 
-            <div>UAV主要功能為影像計算 攝影量技術。</div>
+            <div>{{$t('main.textContent')}}</div>
             </v-card-text>
 
             <v-card-actions>
             <v-btn color="orange">
-                Share
+              {{$t('main.share')}}
             </v-btn>
 
             <v-btn color="orange">
-                Explore
+              {{$t('main.explore')}}
             </v-btn>
             </v-card-actions>
         </v-card>   
@@ -150,26 +153,26 @@ const state = reactive({
             src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
             cover
           >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
+            <v-card-title>{{$t('main.cardTitle')}}</v-card-title>
           </v-img>
 
           <v-card-subtitle class="pt-4">
-            Number 10
+            {{$t('main.subTitle')}}
           </v-card-subtitle>
 
           <v-card-text>
-            <div>Whitehaven Beach</div>
+            <div>{{$t('main.cardText')}}</div>
 
-            <div>UAV主要功能為影像計算 攝影量技術。</div>
+            <div>{{$t('main.textContent')}}</div>
           </v-card-text>
 
           <v-card-actions>
             <v-btn color="orange">
-              Share
+              {{$t('main.share')}}
             </v-btn>
 
             <v-btn color="orange">
-              Explore
+              {{$t('main.explore')}}
             </v-btn>
           </v-card-actions>
         </v-card>
