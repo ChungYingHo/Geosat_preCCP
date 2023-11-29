@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref, onMounted, onBeforeUnmount } from 'vue';
 // import { useLocale } from '~/composables/useLocale'
 
 // page setting
@@ -22,7 +22,23 @@ const state = reactive({
       src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
     },
   ],
+  currentSlide: ref(0), 
 });
+
+const changeSlide = () => {
+  state.currentSlide = (state.currentSlide + 1) % state.items.length;
+};
+
+let timer: number;
+
+onMounted(() => {
+  timer = window.setInterval(changeSlide, 3000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(timer);
+});
+
 
 </script>
 
@@ -30,7 +46,7 @@ const state = reactive({
 <template>
   <div class="main-container">
 
-    <v-carousel hide-delimiters style="height: 70vh;">
+    <v-carousel hide-delimiters style="height: 70vh;" v-model="state.currentSlide">
     <v-carousel-item
       v-for="(item, i) in state.items"
       :key="i"
