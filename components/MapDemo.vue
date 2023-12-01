@@ -1,4 +1,6 @@
 <script setup>
+import { Point } from 'ol/geom';
+
 const uavStore = useUavStore()
 const center = ref([40, 40]);
 const projection = ref("EPSG:4326");
@@ -51,6 +53,12 @@ const bingLayer = ref(null);
           <ol-source-osm />
         </ol-tile-layer>
       </div>
+
+      <ol-interaction
+        ref="clickInteraction"
+        v-if="map"
+        :handleClick="handleClick"
+      />
       
     </ol-map>
   </div>
