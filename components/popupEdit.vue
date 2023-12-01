@@ -9,11 +9,35 @@ const uavStore = useUavStore()
             elevation="12"
             rounded="lg"
             width="20vw"
-            height="10vh"
+            height="fit-content"
             class="pa-4 text-center mx-auto"
         >
-            <!-- 新增你要的介面 -->
-            <v-btn icon="mdi-close" @click="uavStore.isPopupEditOpen = false"></v-btn>
+            <v-icon icon="mdi-close" @click="uavStore.handleClick" class="ml-auto align-center"></v-icon>
+
+            <v-divider></v-divider>
+            
+            <v-switch
+            v-model="uavStore.drawPoint"
+            hide-details
+            inset
+            :label="`Point`"
+            @change="uavStore.setVector('point')"
+          ></v-switch>
+          <v-switch
+            v-model="uavStore.drawLine"
+            hide-details
+            inset
+            :label="`Line`"
+            @change="uavStore.setVector('line')"
+          ></v-switch>
+          <v-switch
+            v-model="uavStore.drawArea"
+            hide-details
+            inset
+            :label="`Area`"
+            @change="uavStore.setVector('area')"
+          ></v-switch>
+
         </v-sheet>
     </div>
 </template>

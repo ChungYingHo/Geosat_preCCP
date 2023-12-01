@@ -3,16 +3,10 @@ const uavStore = useUavStore()
 const center = ref([40, 40]);
 const projection = ref("EPSG:4326");
 const zoom = ref(8);
-const layerList = ref([]);
 const jawgLayer = ref(null);
 const osmLayer = ref(null);
 const bingLayer = ref(null);
 
-// onMounted(() => {
-//   layerList.value.push(jawgLayer.value.tileLayer);
-//   layerList.value.push(bingLayer.value.tileLayer);
-//   layerList.value.push(osmLayer.value.tileLayer);
-// });
 </script>
 
 <template>
@@ -52,6 +46,29 @@ const bingLayer = ref(null);
         </ol-tile-layer>
       </div>
       
+      <!-- todo 向量圖層，點線面專用 -->
+      <ol-vector-layer>
+        <ol-source-vector :projection="projection">
+          <ol-interaction-draw
+            v-if="uavStore.drawEnable"
+            :type="uavStore.drawType"
+          >
+            <ol-style>
+              <ol-style-stroke color="blue" :width="2"></ol-style-stroke>
+              <ol-style-fill color="rgba(255, 255, 0, 0.4)"></ol-style-fill>
+            </ol-style>
+          </ol-interaction-draw>
+        </ol-source-vector>
+
+        <ol-style>
+          <ol-style-stroke color="red" :width="2"></ol-style-stroke>
+          <ol-style-fill color="rgba(255,255,255,0.1)"></ol-style-fill>
+          <ol-style-circle :radius="7">
+            <ol-style-fill color="red"></ol-style-fill>
+          </ol-style-circle>
+        </ol-style>
+      </ol-vector-layer>
+
     </ol-map>
   </div>
 </template>
