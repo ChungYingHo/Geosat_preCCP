@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import '~/assets/styles/main-page.scss'
 const {localePath} = useLocale()
+const uavStore = useUavStore()
 </script>
 
 <template>
@@ -24,11 +26,13 @@ const {localePath} = useLocale()
                         <v-list-item
                             prepend-icon="mdi-layers"
                             :title="$t('UAV.layers')"
-                            value="layers"></v-list-item>
+                            value="layers"
+                            @click="uavStore.isPopupLayerOpen = true"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-note-edit"
                             :title="$t('UAV.edit')"
-                            value="edit"></v-list-item>
+                            value="edit"
+                            @click="uavStore.isPopupEditOpen = true"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-rotate-left"
                             :title="$t('UAV.reset')"
@@ -67,6 +71,13 @@ const {localePath} = useLocale()
 
                 <!-- todo here is the map component -->
                 <MapDemo/>
+                <!-- todo here is popup modal -->
+                <PopupLayers
+                    style="top: 0; left: 20vw;"
+                    v-if="uavStore.isPopupLayerOpen"/>
+                <PopupEdit
+                    style="top: 0;right: 20vw;"
+                    v-if="uavStore.isPopupEditOpen"/>
             </v-layout>
         </v-card>
     </div>
