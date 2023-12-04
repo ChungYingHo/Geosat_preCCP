@@ -1,3 +1,4 @@
+<script setup></script>
 <script setup>
 import { Point } from 'ol/geom';
 
@@ -48,11 +49,11 @@ const bingLayer = ref(null);
         </ol-tile-layer>
       </div>
 
-      <ol-interaction
+      <!-- <ol-interaction
         ref="clickInteraction"
         v-if="map"
         :handleClick="handleClick"
-      />
+      /> -->
       
       <!-- todo 向量圖層，點線面專用 -->
       <ol-vector-layer>
@@ -60,6 +61,7 @@ const bingLayer = ref(null);
           <ol-interaction-draw
             v-if="uavStore.drawEnable"
             :type="uavStore.drawType"
+            @drawend="handleDrawEnd"
           >
             <ol-style>
               <ol-style-stroke color="blue" :width="2"></ol-style-stroke>
@@ -76,8 +78,8 @@ const bingLayer = ref(null);
           </ol-style-circle>
         </ol-style>
       </ol-vector-layer>
-
     </ol-map>
+    <ol-mouseposition-control />
   </div>
 </template>
 
