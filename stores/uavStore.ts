@@ -15,40 +15,38 @@ export const useUavStore = defineStore('uav', ()=>{
     // 向量圖層
     const drawEnable = ref(false)
     const drawType = ref("Point")
-    const drawPoint = ref(true)
-    const drawLine = ref(false)
-    const drawArea = ref(false)
+    const selectedType = reactive({
+        drawPoint: false,
+        drawLine: false,
+        drawArea: false
+    })
     const setVector = (tool: 'point' | 'line' | 'area') =>{
-        if(tool === 'point'){
-            drawType.value = 'Point'
-            drawLine.value = false
-            drawArea.value = false
-            console.log(drawType.value)
-            console.log(drawEnable.value)
-        }else if(tool === 'line'){
-            drawType.value = 'LineString'
-            drawPoint.value = false
-            drawArea.value = false
-            console.log(drawType.value)
-            console.log(drawEnable.value)
-        }else if(tool === 'area'){
-            drawType.value = 'Polygon'
-            drawLine.value = false
-            drawPoint.value = false
-            console.log(drawType.value)
-            console.log(drawEnable.value)
+        drawEnable.value = selectedType.drawPoint || selectedType.drawLine || selectedType.drawArea
+
+        switch(tool){
+            case "point":
+                drawType.value = "Point"
+                Object.assign(selectedType, { drawLine: false, drawArea: false })
+                break
+            case "line":
+                drawType.value = "LineString"
+                Object.assign(selectedType, { drawPoint: false, drawArea: false })
+                break
+            case "area":
+                drawType.value = 'Polygon'
+                Object.assign(selectedType, { drawLine: false, drawPoint: false })
+                break
+            default:
+                break
         }
     }
     // todo 為了開啟/關閉彈跳視窗時也開啟/關閉向量圖層
     const handleClick = () =>{
         isPopupEditOpen.value = !isPopupEditOpen.value
-        drawEnable.value = !drawEnable.value
-        if(drawEnable.value === false){
-            drawPoint.value = false
-            drawLine.value = false
-            drawArea.value = false
+        if(isPopupEditOpen.value === false){
+            drawEnable.value = false
+            Object.assign(selectedType, {drawPoint: false, drawLine: false, drawArea: false})
         }
-        console.log(isPopupEditOpen.value, drawEnable.value)
     }
 
     return {
@@ -61,9 +59,7 @@ export const useUavStore = defineStore('uav', ()=>{
         drawEnable,
         drawType,
         setVector,
-        drawPoint,
-        drawLine,
-        drawArea,
+        selectedType,
         handleClick
     }
 })

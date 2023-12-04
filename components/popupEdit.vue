@@ -17,21 +17,21 @@ const uavStore = useUavStore()
             <v-divider></v-divider>
             
             <v-switch
-            v-model="uavStore.drawPoint"
+            v-model="uavStore.selectedType.drawPoint"
             hide-details
             inset
             :label="`Point`"
             @change="uavStore.setVector('point')"
           ></v-switch>
           <v-switch
-            v-model="uavStore.drawLine"
+            v-model="uavStore.selectedType.drawLine"
             hide-details
             inset
             :label="`Line`"
             @change="uavStore.setVector('line')"
           ></v-switch>
           <v-switch
-            v-model="uavStore.drawArea"
+            v-model="uavStore.selectedType.drawArea"
             hide-details
             inset
             :label="`Area`"
