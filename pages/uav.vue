@@ -32,7 +32,7 @@ const uavStore = useUavStore()
                             prepend-icon="mdi-note-edit"
                             :title="$t('UAV.edit')"
                             value="edit"
-                            @click="uavStore.isPopupEditOpen = true"></v-list-item>
+                            @click="uavStore.handleClick"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-rotate-left"
                             :title="$t('UAV.reset')"
