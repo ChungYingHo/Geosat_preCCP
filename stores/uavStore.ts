@@ -40,13 +40,17 @@ export const useUavStore = defineStore('uav', ()=>{
                 break
         }
     }
-    // todo 為了開啟/關閉彈跳視窗時也開啟/關閉向量圖層
+    // todo 為了關閉彈跳視窗時也關閉向量圖層
     const handleClick = () =>{
         isPopupEditOpen.value = !isPopupEditOpen.value
         if(isPopupEditOpen.value === false){
             drawEnable.value = false
             Object.assign(selectedType, {drawPoint: false, drawLine: false, drawArea: false})
         }
+    }
+    const drawend = (event: any) =>{
+        console.log(event);
+        console.log(event.feature.values_.geometry.flatCoordinates)
     }
 
     return {
@@ -60,6 +64,7 @@ export const useUavStore = defineStore('uav', ()=>{
         drawType,
         setVector,
         selectedType,
-        handleClick
+        handleClick,
+        drawend
     }
 })

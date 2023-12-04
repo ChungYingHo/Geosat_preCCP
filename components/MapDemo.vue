@@ -1,7 +1,8 @@
 <script setup></script>
 <script setup>
-import { Point } from 'ol/geom';
-
+import { pointerMove } from 'ol/events/condition';
+import { getCenter } from 'ol/extent';
+import * as format from 'ol/format'
 const uavStore = useUavStore()
 const center = ref([40, 40]);
 const projection = ref("EPSG:4326");
@@ -10,6 +11,20 @@ const jawgLayer = ref(null);
 const osmLayer = ref(null);
 const bingLayer = ref(null);
 
+// !test
+const geoJson = new format.GeoJSON()
+const selectedCityName = ref("");
+const selectedCityPosition = ref([]);
+const featureSelected = (event) => {
+  if (event.selected.length == 1) {
+    selectedCityPosition.value = getCenter(
+      event.selected[0].getGeometry().extent_,
+    );
+    selectedCityName.value = event.selected[0].values_.name;
+  } else {
+    selectedCityName.value = "";
+  }
+}
 </script>
 
 <template>
@@ -48,20 +63,14 @@ const bingLayer = ref(null);
           <ol-source-osm />
         </ol-tile-layer>
       </div>
-
-      <!-- <ol-interaction
-        ref="clickInteraction"
-        v-if="map"
-        :handleClick="handleClick"
-      /> -->
       
       <!-- todo 向量圖層，點線面專用 -->
       <ol-vector-layer>
-        <ol-source-vector :projection="projection">
+        <ol-source-vector :projection="projection" :format="geoJson">
           <ol-interaction-draw
             v-if="uavStore.drawEnable"
             :type="uavStore.drawType"
-            @drawend="handleDrawEnd"
+            @drawend = "uavStore.drawend"
           >
             <ol-style>
               <ol-style-stroke color="blue" :width="2"></ol-style-stroke>
@@ -78,6 +87,30 @@ const bingLayer = ref(null);
           </ol-style-circle>
         </ol-style>
       </ol-vector-layer>
+
+      <!-- todo 顯示資訊 -->
+      <ol-interaction-select
+        @select="featureSelected"
+        :condition="pointerMove"
+        v-if="!uavStore.drawEnable"
+      >
+        <ol-style>
+          <ol-style-stroke color="green" :width="10"></ol-style-stroke>
+          <ol-style-fill color="rgba(255,255,255,0.5)"></ol-style-fill>
+        </ol-style>
+      </ol-interaction-select>
+
+      <ol-overlay
+        :position="selectedCityPosition"
+        v-if="selectedCityName != '' && !uavStore.drawEnable"
+      >
+        <template v-slot="slotProps">
+          <div class="overlay-content">
+            {{ selectedCityName }} {{ slotProps }}
+          </div>
+        </template>
+      </ol-overlay>
+
     </ol-map>
     <ol-mouseposition-control />
   </div>
