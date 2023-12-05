@@ -59,6 +59,7 @@ export const useUavStore = defineStore('uav', ()=>{
     }
 
     // 顯示點線面資訊
+    // todo display point info
     // *將地理資訊轉為易處理的 GeoJSON
     const geoJson = new format.GeoJSON()
     const selectedCondition = selectedConditions.singleClick
