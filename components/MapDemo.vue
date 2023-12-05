@@ -1,4 +1,3 @@
-<script setup></script>
 <script setup>
 import { pointerMove } from 'ol/events/condition';
 import { getCenter } from 'ol/extent';
@@ -112,7 +111,5 @@ const featureSelected = (event) => {
       </ol-overlay>
 
     </ol-map>
-    <ol-mouseposition-control />
   </div>
 </template>
-
