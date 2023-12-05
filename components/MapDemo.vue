@@ -120,9 +120,6 @@ const bingLayer = ref(null);
 
     </ol-map>
   </div>
-<<<<<<< HEAD
-</template>
-=======
 </template>
 
 <style scoped>
@@ -134,4 +131,3 @@ const bingLayer = ref(null);
   font-size: 16px;
 }
 </style>
->>>>>>> 1603c5f03e9ae592bd924fcafe91b23d48c3c574
