@@ -38,33 +38,28 @@ const bingLayer = ref(null);
         :zoom="zoom"
         :projection="projection"
       />
-
-      <div v-if="uavStore.isJawgOpen">
-        <ol-tile-layer ref="jawgLayer" title="JAWG" >
-          <ol-source-xyz
-            crossOrigin="anonymous"
-            url="https://c.tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=87PWIbRaZAGNmYDjlYsLkeTVJpQeCfl2Y61mcHopxXqSdxXExoTLEv7dwqBwSWuJ"
-          />
-        </ol-tile-layer>
-      </div>
-      
-      <div v-if="uavStore.isBingOpen">
-        <ol-tile-layer ref="bingLayer" title="Bing Maps" >
-          <ol-source-bingmaps
-            apiKey="AjtUzWJBHlI3Ma_Ke6Qv2fGRXEs0ua5hUQi54ECwfXTiWsitll4AkETZDihjcfeI"
-            :imagerySet="'CanvasDark'"
-          />
-        </ol-tile-layer>
-      </div>
-      
-      <div v-if="uavStore.isOsmOpen">
-        <ol-tile-layer ref="osmLayer" title="OSM" >
-          <ol-source-osm />
-        </ol-tile-layer>
-      </div>
+      <ol-layerswitcherimage-control />
+      <!-- todo 三個圖層切換 -->
+      <ol-tile-layer ref="jawgLayer" title="JAWG" v-if="uavStore.isJawgOpen" zIndex="1">
+        <ol-source-xyz
+          crossOrigin="anonymous"
+          url="https://c.tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=87PWIbRaZAGNmYDjlYsLkeTVJpQeCfl2Y61mcHopxXqSdxXExoTLEv7dwqBwSWuJ"
+        />
+      </ol-tile-layer>
+    
+      <ol-tile-layer ref="bingLayer" title="Bing Maps" v-if="uavStore.isBingOpen" zIndex="1">
+        <ol-source-bingmaps
+          apiKey="AjtUzWJBHlI3Ma_Ke6Qv2fGRXEs0ua5hUQi54ECwfXTiWsitll4AkETZDihjcfeI"
+          :imagerySet="'CanvasDark'"
+        />
+      </ol-tile-layer>
+    
+      <ol-tile-layer ref="osmLayer" title="OSM" v-if="uavStore.isOsmOpen" zIndex="1">
+        <ol-source-osm />
+      </ol-tile-layer>
       
       <!-- todo 向量圖層，點線面專用 -->
-      <ol-vector-layer>
+      <ol-vector-layer zIndex="2">
         <ol-source-vector
           :projection="projection"
           :format="uavStore.geoJson">
@@ -72,6 +67,7 @@ const bingLayer = ref(null);
             v-if="uavStore.drawEnable"
             :type="uavStore.drawType"
             @drawend = "uavStore.drawend"
+            style="z-index: 100;position: relative;"
           >
             <ol-style>
               <ol-style-stroke color="blue" :width="2"></ol-style-stroke>
