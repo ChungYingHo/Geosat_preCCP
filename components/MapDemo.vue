@@ -3,7 +3,7 @@
 // import { getCenter } from 'ol/extent';
 // import * as format from 'ol/format'
 const uavStore = useUavStore()
-const center = ref([40, 40]);
+const center = ref([120, 23]);
 const projection = ref("EPSG:4326");
 const zoom = ref(8);
 const jawgLayer = ref(null);
@@ -59,15 +59,13 @@ const bingLayer = ref(null);
       </ol-tile-layer>
       
       <!-- todo 向量圖層，點線面專用 -->
-      <ol-vector-layer zIndex="2">
+      <ol-vector-layer zIndex="10">
         <ol-source-vector
           :projection="projection"
           :format="uavStore.geoJson">
           <ol-interaction-draw
             v-if="uavStore.drawEnable"
             :type="uavStore.drawType"
-            @drawend = "uavStore.drawend"
-            style="z-index: 100;position: relative;"
           >
             <ol-style>
               <ol-style-stroke color="blue" :width="2"></ol-style-stroke>
@@ -107,11 +105,12 @@ const bingLayer = ref(null);
         :position="uavStore.selectedPosition"
         v-if="uavStore.selectedPosition != '' && !uavStore.drawEnable"
       >
-        <template v-slot="slotProps">
-          <div class="overlay-content">
-            {{ slotProps }}
+          <div class="overlay-content" v-if="uavStore.selectedGeometry === 'Point'">
+            {{ uavStore.selectedPosition }}
           </div>
-        </template>
+          <div class="overlay-content" v-if="uavStore.selectedGeometry === 'LineString'">
+            {{ uavStore.selectedLength }} km
+          </div>
       </ol-overlay>
 
     </ol-map>
