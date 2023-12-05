@@ -1,3 +1,8 @@
+// !這裡的 import 是要給點線面顯示資訊用的
+import * as selectedConditions from 'ol/events/condition'
+import * as extent from "ol/extent"
+import * as format from "ol/format"
+
 export const useUavStore = defineStore('uav', ()=>{
     const isPopupLayerOpen = ref(false)
     const isPopupEditOpen = ref(false)
@@ -53,6 +58,26 @@ export const useUavStore = defineStore('uav', ()=>{
         console.log(event.feature.values_.geometry.flatCoordinates)
     }
 
+    // 顯示點線面資訊
+    // *將地理資訊轉為易處理的 GeoJSON
+    const geoJson = new format.GeoJSON()
+    const selectedCondition = selectedConditions.singleClick
+    const selectedPosition = ref<number[]>([])
+    const featureSelected = (event: any) =>{
+        if(event.selected.length == 1){
+            selectedPosition.value = extent.getCenter(
+                event.selected[0].getGeometry().extent_,
+            )
+        }else{
+            selectedPosition.value = []
+        }
+    }
+    // *過濾交互要素
+    const selectInteactionFilter = (feature: any) => {
+        console.log(feature)
+        return feature.values_ != undefined;
+    }
+
     return {
         isPopupLayerOpen,
         isPopupEditOpen,
@@ -65,6 +90,11 @@ export const useUavStore = defineStore('uav', ()=>{
         setVector,
         selectedType,
         handleClick,
-        drawend
+        drawend,
+        geoJson,
+        selectedCondition,
+        selectedPosition,
+        featureSelected,
+        selectInteactionFilter
     }
 })
