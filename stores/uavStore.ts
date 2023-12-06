@@ -1,8 +1,9 @@
 // !這裡的 import 是要給點線面顯示資訊用的
 import * as selectedConditions from 'ol/events/condition'
 import * as extent from "ol/extent"
-import * as format from "ol/format"
 import {getLength, getArea} from 'ol/sphere'
+import { Collection } from 'ol'
+import * as format from "ol/format"
 
 export const useUavStore = defineStore('uav', ()=>{
     const isPopupLayerOpen = ref(false)
@@ -33,7 +34,6 @@ export const useUavStore = defineStore('uav', ()=>{
             case "point":
                 drawType.value = "Point"
                 Object.assign(selectedType, { drawLine: false, drawArea: false })
-                console.log(geoJson)
                 break
             case "line":
                 drawType.value = "LineString"
@@ -59,12 +59,10 @@ export const useUavStore = defineStore('uav', ()=>{
     const resetCounter = ref(0)
     const handleReset = ()=>{
         resetCounter.value++
+        selectedPosition.value = [] as number[]
     }
 
     // 顯示點線面資訊
-    // todo display point info
-    // *將地理資訊轉為易處理的 GeoJSON
-    const geoJson = new format.GeoJSON()
     const selectedCondition = selectedConditions.singleClick
     const selectedPosition = ref<number[]>([])
     const selectedLength = ref<number | string>('')
@@ -76,7 +74,6 @@ export const useUavStore = defineStore('uav', ()=>{
             // 以下會單純取出一個物件的名字
             const geometryType = selectedFeature.getGeometry().getType()
             selectedGeometry.value = geometryType
-            console.log(event, geometryType, selectedFeature.getGeometry())
             selectedPosition.value = extent.getCenter(
                 event.selected[0].getGeometry().extent_,
             )
@@ -97,18 +94,20 @@ export const useUavStore = defineStore('uav', ()=>{
                 let area: number = getArea(polygon, { projection: 'EPSG:4326' })
                 area = Number((area / 1000000).toFixed(2))
                 selectedArea.value = area as number
-                console.log('Area', polygon, area)
             }
         }else{
             selectedPosition.value = [] as number[]
         }
     }
-    // *過濾交互要素
+    // 過濾交互要素
     const selectInteactionFilter = (feature: any) => {
         let geometryType = feature.getGeometry().getType();
 
         return geometryType === 'Point' || geometryType === 'LineString' || geometryType === 'Polygon'
     }
+
+    // 控制點線面
+    
 
     return {
         isPopupLayerOpen,
@@ -122,7 +121,6 @@ export const useUavStore = defineStore('uav', ()=>{
         setVector,
         selectedType,
         handleClick,
-        geoJson,
         selectedCondition,
         selectedPosition,
         featureSelected,
@@ -131,6 +129,6 @@ export const useUavStore = defineStore('uav', ()=>{
         selectedArea,
         selectedGeometry,
         resetCounter,
-        handleReset
+        handleReset,
     }
 })

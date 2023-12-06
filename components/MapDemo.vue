@@ -1,7 +1,4 @@
 <script setup>
-// import { pointerMove } from 'ol/events/condition';
-// import { getCenter } from 'ol/extent';
-// import * as format from 'ol/format'
 const uavStore = useUavStore()
 const center = ref([120, 23]);
 const projection = ref("EPSG:4326");
@@ -9,21 +6,6 @@ const zoom = ref(8);
 const jawgLayer = ref(null);
 const osmLayer = ref(null);
 const bingLayer = ref(null);
-
-// // !test
-// const geoJson = new format.GeoJSON()
-// const selectedCityName = ref("");
-// const selectedCityPosition = ref([]);
-// const featureSelected = (event) => {
-//   if (event.selected.length == 1) {
-//     selectedCityPosition.value = getCenter(
-//       event.selected[0].getGeometry().extent_,
-//     );
-//     selectedCityName.value = event.selected[0].values_.name;
-//   } else {
-//     selectedCityName.value = "";
-//   }
-// }
 </script>
 
 <template>
@@ -38,7 +20,6 @@ const bingLayer = ref(null);
         :zoom="zoom"
         :projection="projection"
       />
-      <ol-layerswitcherimage-control />
       <!-- todo 三個圖層切換 -->
       <ol-tile-layer ref="jawgLayer" title="JAWG" v-if="uavStore.isJawgOpen" zIndex="1">
         <ol-source-xyz
@@ -67,12 +48,8 @@ const bingLayer = ref(null);
             v-if="uavStore.drawEnable"
             :type="uavStore.drawType"
           >
-            <ol-style>
-              <ol-style-stroke color="blue" :width="2"></ol-style-stroke>
-              <ol-style-fill color="rgba(255, 255, 0, 0.4)"></ol-style-fill>
-            </ol-style>
           </ol-interaction-draw>
-
+          
           <ol-interaction-modify
             v-if="uavStore.drawEnable"
           >
@@ -80,8 +57,11 @@ const bingLayer = ref(null);
         </ol-source-vector>
 
         <ol-style>
+          <!-- 線和邊的顏色 -->
           <ol-style-stroke color="red" :width="2"></ol-style-stroke>
-          <ol-style-fill color="rgba(255,255,255,0.1)"></ol-style-fill>
+          <!-- 面積內裡著色 -->
+          <ol-style-fill color="rgba(255,255,255,0.5)"></ol-style-fill>
+          <!-- 點的顏色 -->
           <ol-style-circle :radius="7">
             <ol-style-fill color="red"></ol-style-fill>
           </ol-style-circle>
@@ -96,8 +76,12 @@ const bingLayer = ref(null);
         v-if="!uavStore.drawEnable"
       >
         <ol-style>
-          <ol-style-stroke color="green" :width="10"></ol-style-stroke>
+          <ol-style-stroke color="orange" :width="10"></ol-style-stroke>
+          <!-- 多邊形內部著色 -->
           <ol-style-fill color="rgba(255,255,255,0.5)"></ol-style-fill>
+          <ol-style-circle :radius="7">
+            <ol-style-fill color="gray"></ol-style-fill>
+          </ol-style-circle>
         </ol-style>
       </ol-interaction-select>
 
@@ -115,6 +99,8 @@ const bingLayer = ref(null);
             {{ uavStore.selectedArea }} km²
           </div>
       </ol-overlay>
+
+     
 
     </ol-map>
   </div>
