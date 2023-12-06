@@ -33,6 +33,7 @@ export const useUavStore = defineStore('uav', ()=>{
             case "point":
                 drawType.value = "Point"
                 Object.assign(selectedType, { drawLine: false, drawArea: false })
+                console.log(geoJson)
                 break
             case "line":
                 drawType.value = "LineString"
@@ -53,6 +54,11 @@ export const useUavStore = defineStore('uav', ()=>{
             drawEnable.value = false
             Object.assign(selectedType, {drawPoint: false, drawLine: false, drawArea: false})
         }
+    }
+    // 清空繪圖資訊
+    const resetCounter = ref(0)
+    const handleReset = ()=>{
+        resetCounter.value++
     }
 
     // 顯示點線面資訊
@@ -123,6 +129,8 @@ export const useUavStore = defineStore('uav', ()=>{
         selectInteactionFilter,
         selectedLength,
         selectedArea,
-        selectedGeometry
+        selectedGeometry,
+        resetCounter,
+        handleReset
     }
 })

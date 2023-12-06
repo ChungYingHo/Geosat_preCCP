@@ -59,7 +59,7 @@ const bingLayer = ref(null);
       </ol-tile-layer>
       
       <!-- todo 向量圖層，點線面專用 -->
-      <ol-vector-layer zIndex="10">
+      <ol-vector-layer zIndex="2" :key="uavStore.resetCounter">
         <ol-source-vector
           :projection="projection"
           :format="uavStore.geoJson">

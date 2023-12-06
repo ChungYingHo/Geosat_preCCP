@@ -36,7 +36,8 @@ const uavStore = useUavStore()
                         <v-list-item
                             prepend-icon="mdi-rotate-left"
                             :title="$t('UAV.reset')"
-                            value="Reset"></v-list-item>
+                            value="Reset"
+                            @click="uavStore.handleReset"></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-folder"
                             :title="$t('UAV.project')"
