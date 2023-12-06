@@ -62,6 +62,7 @@ export const useUavStore = defineStore('uav', ()=>{
     const selectedCondition = selectedConditions.singleClick
     const selectedPosition = ref<number[]>([])
     const selectedLength = ref<number | string>('')
+    const selectedArea = ref<number | string>('')
     const selectedGeometry = ref('')
     const featureSelected = (event: any) =>{
         if(event.selected.length == 1){
@@ -83,9 +84,14 @@ export const useUavStore = defineStore('uav', ()=>{
                 let length: number = getLength(lineString, { projection: 'EPSG:4326' })
                 length = Number((length / 1000).toFixed(2))
                 selectedLength.value = length as number
-                console.log(length, selectedLength.value)
             }else if(geometryType === 'Point'){
                 selectedLength.value = ''
+            }else if(geometryType === 'Polygon'){
+                const polygon = selectedFeature.getGeometry()
+                let area: number = getArea(polygon, { projection: 'EPSG:4326' })
+                area = Number((area / 1000000).toFixed(2))
+                selectedArea.value = area as number
+                console.log('Area', polygon, area)
             }
         }else{
             selectedPosition.value = [] as number[]
@@ -95,7 +101,7 @@ export const useUavStore = defineStore('uav', ()=>{
     const selectInteactionFilter = (feature: any) => {
         let geometryType = feature.getGeometry().getType();
 
-        return geometryType === 'Point' || geometryType === 'LineString'
+        return geometryType === 'Point' || geometryType === 'LineString' || geometryType === 'Polygon'
     }
 
     return {
@@ -116,6 +122,7 @@ export const useUavStore = defineStore('uav', ()=>{
         featureSelected,
         selectInteactionFilter,
         selectedLength,
+        selectedArea,
         selectedGeometry
     }
 })
