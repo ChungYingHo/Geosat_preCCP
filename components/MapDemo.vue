@@ -111,6 +111,9 @@ const bingLayer = ref(null);
           <div class="overlay-content" v-if="uavStore.selectedGeometry === 'LineString'">
             {{ uavStore.selectedLength }} km
           </div>
+          <div class="overlay-content" v-if="uavStore.selectedGeometry === 'Polygon'">
+            {{ uavStore.selectedArea }} km²
+          </div>
       </ol-overlay>
 
     </ol-map>
