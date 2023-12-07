@@ -42,7 +42,7 @@ const {sourceL} = storeToRefs(uavStore)
       </ol-tile-layer>
       
       <!-- todo 向量圖層，點線面專用 -->
-      <ol-vector-layer zIndex="2" :key="uavStore.sourceL">
+      <ol-vector-layer zIndex="2" :key="uavStore.resetCounter">
         <ol-source-vector
           :projection="projection"
           :format="uavStore.geoJson"
@@ -87,7 +87,6 @@ const {sourceL} = storeToRefs(uavStore)
           </ol-style-circle>
         </ol-style>
       </ol-interaction-select>
-
 
       <ol-overlay
         :position="uavStore.selectedPosition"
