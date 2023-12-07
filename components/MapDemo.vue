@@ -6,17 +6,8 @@ const zoom = ref(8);
 const jawgLayer = ref(null);
 const osmLayer = ref(null);
 const bingLayer = ref(null);
-
-// delete a point
-const sourceL = ref(null)
-const seletedDelete = (event)=>{
-  const selectedFeature = event.selected[0]
-  console.log('source', sourceL.value)
-  console.log(sourceL.value.source)
-  sourceL.value.source.removeFeature(selectedFeature)
-  console.log('done')
-}
-
+// pinia store 的 ref 解構
+const {sourceL} = storeToRefs(uavStore)
 </script>
 
 <template>
@@ -83,7 +74,7 @@ const seletedDelete = (event)=>{
       <!-- todo 顯示資訊 -->
       <ol-interaction-select
         @select="uavStore.featureSelected"
-        :condition="uavStore.selectedCondition"
+        :condition="uavStore.selectedConditions.singleClick"
         :filter = "uavStore.selectInteactionFilter"
         v-if="!uavStore.drawEnable"
       >
@@ -112,10 +103,10 @@ const seletedDelete = (event)=>{
           </div>
       </ol-overlay>
 
-      <!-- test delete -->
+      <!-- !delete the feature-->
       <ol-interaction-select
-        @select="seletedDelete"
-        :condition="uavStore.selectedConditions.doubleClick"
+        @select="uavStore.seletedDelete"
+        :condition="uavStore.selectedConditions.altKeyOnly"
         :filter = "uavStore.selectInteactionFilter"
         v-if="!uavStore.drawEnable"
       >
