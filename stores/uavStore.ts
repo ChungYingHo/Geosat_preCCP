@@ -2,8 +2,6 @@
 import * as selectedConditions from 'ol/events/condition'
 import * as extent from "ol/extent"
 import {getLength, getArea} from 'ol/sphere'
-import { Collection } from 'ol'
-import * as format from "ol/format"
 
 export const useUavStore = defineStore('uav', ()=>{
     const isPopupLayerOpen = ref(false)
@@ -55,7 +53,7 @@ export const useUavStore = defineStore('uav', ()=>{
             Object.assign(selectedType, {drawPoint: false, drawLine: false, drawArea: false})
         }
     }
-    // 清空繪圖資訊
+    // 清空全部繪圖資訊
     const resetCounter = ref(0)
     const handleReset = ()=>{
         resetCounter.value++
@@ -106,8 +104,6 @@ export const useUavStore = defineStore('uav', ()=>{
         return geometryType === 'Point' || geometryType === 'LineString' || geometryType === 'Polygon'
     }
 
-    // 控制點線面
-    
 
     return {
         isPopupLayerOpen,
@@ -130,5 +126,6 @@ export const useUavStore = defineStore('uav', ()=>{
         selectedGeometry,
         resetCounter,
         handleReset,
+        selectedConditions
     }
 })
