@@ -105,6 +105,7 @@ export const useUavStore = defineStore('uav', ()=>{
         console.log(sourceL.value.source)
         sourceL.value.source.removeFeature(selectedFeature)
         console.log('done')
+        selectedPosition.value = [] as number[]
     }
     // 清空全部繪圖資訊
     const resetCounter = ref(0)
@@ -112,6 +113,7 @@ export const useUavStore = defineStore('uav', ()=>{
         // resetCounter.value++
         // selectedPosition.value = [] as number[]
         sourceL.value.source.clear()
+        selectedPosition.value = [] as number[]
     }
 
 
