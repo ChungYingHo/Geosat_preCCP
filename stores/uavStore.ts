@@ -53,13 +53,8 @@ export const useUavStore = defineStore('uav', ()=>{
             Object.assign(selectedType, {drawPoint: false, drawLine: false, drawArea: false})
         }
     }
-    // 清空全部繪圖資訊
-    const resetCounter = ref(0)
-    const handleReset = () =>{
-       
 
     // 顯示點線面資訊
-    const selectedCondition = selectedConditions.singleClick
     const selectedPosition = ref<number[]>([])
     const selectedLength = ref<number | string>('')
     const selectedArea = ref<number | string>('')
@@ -107,6 +102,25 @@ export const useUavStore = defineStore('uav', ()=>{
         return geometryType === 'Point' || geometryType === 'LineString' || geometryType === 'Polygon'
     }
 
+    // 刪除點線面
+    const sourceL = ref<any | null>(null)
+    const seletedDelete = (event: any)=>{
+        const selectedFeature = event.selected[0]
+        console.log('source', sourceL.value)
+        console.log(sourceL.value.source)
+        sourceL.value.source.removeFeature(selectedFeature)
+        console.log('done')
+        selectedPosition.value = [] as number[]
+    }
+    // 清空全部繪圖資訊
+    const resetCounter = ref(0)
+    const handleReset = ()=>{
+        // resetCounter.value++
+        // selectedPosition.value = [] as number[]
+        sourceL.value.source.clear()
+        selectedPosition.value = [] as number[]
+    }
+
 
     return {
         isPopupLayerOpen,
@@ -120,7 +134,6 @@ export const useUavStore = defineStore('uav', ()=>{
         setVector,
         selectedType,
         handleClick,
-        selectedCondition,
         selectedPosition,
         featureSelected,
         selectInteactionFilter,
@@ -129,6 +142,8 @@ export const useUavStore = defineStore('uav', ()=>{
         selectedGeometry,
         resetCounter,
         handleReset,
-        selectedConditions
+        selectedConditions,
+        sourceL,
+        seletedDelete
     }
 })
