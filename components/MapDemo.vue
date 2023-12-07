@@ -6,13 +6,24 @@ const zoom = ref(8);
 const jawgLayer = ref(null);
 const osmLayer = ref(null);
 const bingLayer = ref(null);
-const sourceL = ref(null);
-const selectDelete = (event) => {
-  const selectedFeature =event.selected[0]
-  if (selectedFeature) {
-    sourceL.value.removeFeature(selectedFeature)
-  }
+
+// delete a point
+const sourceL = ref(null)
+const seletedDelete = (event)=>{
+  const selectedFeature = event.selected[0]
+  console.log('source', sourceL.value)
+  console.log(sourceL.value.source)
+  sourceL.value.source.removeFeature(selectedFeature)
 }
+
+const  = (event) => {
+  const features = sourceL.value.source.getFeatures();
+  features.forEach((feature) => {
+    sourceL.value.source.removeFeature(feature);
+  });
+}
+
+
 </script>
 
 <template>
@@ -47,17 +58,17 @@ const selectDelete = (event) => {
       </ol-tile-layer>
       
       <!-- todo 向量圖層，點線面專用 -->
-      <ol-vector-layer zIndex="2" :key="uavStore.resetCounter">
+      <ol-vector-layer zIndex="2" :key="uavStore.sourceL">
         <ol-source-vector
           :projection="projection"
-          ref="sourceL"
-          >
+          :format="uavStore.geoJson"
+          ref="sourceL">
           <ol-interaction-draw
             v-if="uavStore.drawEnable"
             :type="uavStore.drawType"
           >
           </ol-interaction-draw>
-          
+
           <ol-interaction-modify
             v-if="uavStore.drawEnable"
           >
@@ -109,14 +120,23 @@ const selectDelete = (event) => {
           </div>
       </ol-overlay>
 
-      
+      <!-- test delete -->
       <ol-interaction-select
         @select="seletedDelete"
         :condition="uavStore.selectedConditions.doubleClick"
         :filter = "uavStore.selectInteactionFilter"
         v-if="!uavStore.drawEnable"
       >
-     
+        <ol-style>
+          <ol-style-stroke color="orange" :width="10"></ol-style-stroke>
+          <!-- 多邊形內部著色 -->
+          <ol-style-fill color="rgba(255,255,255,0.5)"></ol-style-fill>
+          <ol-style-circle :radius="7">
+            <ol-style-fill color="pink"></ol-style-fill>
+          </ol-style-circle>
+        </ol-style>
+      </ol-interaction-select>
+
 
     </ol-map>
   </div>
