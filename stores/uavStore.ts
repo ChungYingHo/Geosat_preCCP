@@ -1,6 +1,8 @@
 // !這裡的 import 是要給點線面顯示資訊用的
 import * as selectedConditions from 'ol/events/condition'
 import * as extent from "ol/extent"
+import {getLength, getArea} from 'ol/sphere'
+import { Collection } from 'ol'
 import * as format from "ol/format"
 import * as ol from 'ol';
 import * as olGeom from 'ol/geom';
@@ -60,90 +62,64 @@ export const useUavStore = defineStore('uav', ()=>{
             Object.assign(selectedType, {drawPoint: false, drawLine: false, drawArea: false})
         }
     }
-    const drawend = (event: any) =>{
-        console.log(event);
-        console.log(event.feature.values_.geometry.flatCoordinates)
+    // 清空繪圖資訊
+    const resetCounter = ref(0)
+    const handleReset = ()=>{
+        resetCounter.value++
+        selectedPosition.value = [] as number[]
     }
 
     // 顯示點線面資訊
-    // todo display point info
-    // *將地理資訊轉為易處理的 GeoJSON
-    const geoJson = new format.GeoJSON()
     const selectedCondition = selectedConditions.singleClick
-    const selectedPosition = ref<Array<{ coordinates?: number[]; distance?: number; area?: number }>>([]);
-    const featureSelected = (event: any) => {
-        selectedPosition.value = [];
-        
-        // *獲取被選中的要素
-        const selectedFeatures = event.selected;
-        console.log(selectedFeatures)
-      
-        // *迭代選中的要素
-        selectedFeatures.forEach((feature: any) => {
-          // *獲取要素的幾何類型
-          const geometryType = feature.getGeometry().getType(); 
-          if (geometryType === 'Point') {
-            // *獲取點的座標
-            const pointCoordinates = (feature.getGeometry() as olGeom.Point).getCoordinates(); 
-            // *顯示點的座標，你可以根據需要修改顯示的方式
-            console.log('點的座標：', pointCoordinates);   
-            // *將點的座標存入 selectedPosition 中
-            selectedPosition.value.push({ coordinates: pointCoordinates });
-          } else if (geometryType === 'LineString') {
-            // *獲取線段的座標
-            const lineCoordinates = (feature.getGeometry() as olGeom.LineString).getCoordinates();   
-            // *計算線段距離
-            const distance = calculateLineDistance(lineCoordinates);    
-            // *顯示線段距離，你可以根據需要修改顯示的方式
-            console.log('線段距離：', distance, '公尺');
-            // *將線段距離存入 selectedPosition 中
-            selectedPosition.value.push({ distance: distance });
-          }else if (geometryType === 'Polygon') {
-            // *獲取面的座標
-            const polygonCoordinates = (feature.getGeometry() as olGeom.Polygon).getCoordinates();
-            // *計算面積
-            const area = calculatePolygonArea(polygonCoordinates);
-            // *顯示面積，你可以根據需要修改顯示的方式
-            console.log('面積：', area, '平方公尺');
-      
-            // *將面積存入 selectedPosition 中
-            selectedPosition.value.push({ area: area });
-          }
-        });
-      };
-      
-        // *計算線段距離的函數
-        const calculateLineDistance = (coordinates: number[][]): number => {
-            const lineString = new olGeom.LineString(coordinates);
-            const distance = lineString.getLength();
-            return distance; 
-        };
+    const selectedPosition = ref<number[]>([])
+    const selectedLength = ref<number | string>('')
+    const selectedArea = ref<number | string>('')
+    const selectedGeometry = ref('')
+    const featureSelected = (event: any) =>{
+        if(event.selected.length == 1){
+            const selectedFeature = event.selected[0]
+            // 以下會單純取出一個物件的名字
+            const geometryType = selectedFeature.getGeometry().getType()
+            selectedGeometry.value = geometryType
+            selectedPosition.value = extent.getCenter(
+                event.selected[0].getGeometry().extent_,
+            )
+            selectedPosition.value = selectedPosition.value.map(i => {
+                return Number(i.toFixed(2));
+            })
 
-       // *計算多邊形面積的函數
-       const calculatePolygonArea = (coordinates: number[][][]): number => {
-        const polygon = new olGeom.Polygon(coordinates);
-        // *定義原始坐標投影和目標坐標投影
-        const sourceProjection = 'EPSG:4326';  // *假設原始坐標是 EPSG:4326
-        const targetProjection = 'EPSG:3857';  // *修改為你想要的目標投影
-        const transformedCoordinates = coordinates.map(ring =>
-            ring.map(point => olProj.transform(point, sourceProjection, targetProjection))
-        );
-        // *使用轉換後的坐標創建轉換後的多邊形對象
-        const transformedPolygon = new olGeom.Polygon(transformedCoordinates);
-        // *計算多邊形的實際面積，單位通常是地圖的投影下的平方地圖單位（例如平方米）
-        const areaSquareMeter  = transformedPolygon.getArea();
-         // *轉換為平方公里
-        const area = areaSquareMeter  * 0.000001;
-        return area;
-        };
-    
-
-
-    // *過濾交互要素
-    const selectInteactionFilter = (feature: any) => {
-        console.log(feature)
-        return feature.values_ != undefined;
+           if(geometryType === 'LineString'){
+                // 這會取出一個物件
+                const lineString = selectedFeature.getGeometry()
+                let length: number = getLength(lineString, { projection: 'EPSG:4326' })
+                length = Number((length / 1000).toFixed(2))
+                selectedLength.value = length as number
+            }else if(geometryType === 'Point'){
+                selectedLength.value = ''
+            }else if(geometryType === 'Polygon'){
+                const polygon = selectedFeature.getGeometry()
+                let area: number = getArea(polygon, { projection: 'EPSG:4326' })
+                area = Number((area / 1000000).toFixed(2))
+                selectedArea.value = area as number
+            }
+        }else{
+            selectedPosition.value = [] as number[]
+        }
     }
+
+
+   
+
+
+    // 過濾交互要素
+    const selectInteactionFilter = (feature: any) => {
+        let geometryType = feature.getGeometry().getType();
+
+        return geometryType === 'Point' || geometryType === 'LineString' || geometryType === 'Polygon'
+    }
+
+    // 控制點線面
+    
 
     return {
         isPopupLayerOpen,
@@ -157,11 +133,14 @@ export const useUavStore = defineStore('uav', ()=>{
         setVector,
         selectedType,
         handleClick,
-        drawend,
-        geoJson,
         selectedCondition,
         selectedPosition,
         featureSelected,
-        selectInteactionFilter
+        selectInteactionFilter,
+        selectedLength,
+        selectedArea,
+        selectedGeometry,
+        resetCounter,
+        handleReset,
     }
 })
