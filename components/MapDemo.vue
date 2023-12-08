@@ -157,6 +157,22 @@ const {sourceL} = storeToRefs(uavStore)
           serverType="geoserver"
         />
       </ol-image-layer>
+      <ol-image-layer :zIndex="1002" v-if="uavStore.isVillage">
+        <ol-source-image-wms
+          url="https://wms.nlsc.gov.tw/wms"
+          :extent="[13884991, 870341, 7455066, 338219]"
+          layers="Village"
+          serverType="geoserver"
+        />
+      </ol-image-layer>
+      <ol-image-layer :zIndex="1003" v-if="uavStore.isCITY">
+        <ol-source-image-wms
+          url="https://wms.nlsc.gov.tw/wms"
+          :extent="[13884991, 870341, 7455066, 338219]"
+          layers="CITY"
+          serverType="geoserver"
+        />
+      </ol-image-layer>
 
 
     </ol-map>

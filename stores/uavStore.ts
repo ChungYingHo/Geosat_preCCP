@@ -138,6 +138,8 @@ export const useUavStore = defineStore('uav', ()=>{
         }
     }
     const isWMSopen = ref(false)
+    const isVillage = ref(false)
+    const isCITY = ref(false)
 
     return {
         isPopupLayerOpen,
@@ -162,6 +164,8 @@ export const useUavStore = defineStore('uav', ()=>{
         selectedConditions,
         sourceL,
         seletedDelete,
-        isWMSopen
+        isWMSopen,
+        isVillage,
+        isCITY
     }
 })
