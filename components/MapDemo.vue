@@ -113,21 +113,11 @@ const {sourceL} = storeToRefs(uavStore)
       </ol-interaction-select>
 
       <!-- todo wms -->
-      <!-- 官網範例 -->
-      <ol-image-layer :zIndex="1001" v-if="uavStore.isWMSopen">
-        <ol-source-image-wms
-          url="https://ahocevar.com/geoserver/wms"
-          :extent="[-13884991, 2870341, -7455066, 6338219]"
-          layers="topp:states"
-          serverType="geoserver"
-        />
-      </ol-image-layer>
       <!-- 台灣國土 -->
       <ol-image-layer :zIndex="1000" v-if="uavStore.isWMSopen">
         <ol-source-image-wms
           url="https://wms.nlsc.gov.tw/wms"
-          :extent="[13884991, 870341, 7455066, 338219]"
-          layers="EMAP"
+          layers="EMAP2"
           serverType="geoserver"
         />
       </ol-image-layer>

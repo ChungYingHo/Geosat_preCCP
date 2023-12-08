@@ -126,8 +126,40 @@ export const useUavStore = defineStore('uav', ()=>{
             // 使用 DOMParser 解析 XML
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data, 'text/xml');
+            const layerElements = xmlDoc.getElementsByTagName('Layer')
             // 在這裡處理 xmlDoc，例如提取需要的信息
             console.log(xmlDoc)
+            for (let i = 0; i < layerElements.length; i++) {
+                const layerElement = layerElements[i];
+              
+                // 獲取 <Name> 元素的值
+                const nameElement = layerElement.getElementsByTagName('Name')[0];
+                const name = nameElement ? nameElement.textContent : '';
+              
+                // 獲取 <Title> 元素的值
+                const titleElement = layerElement.getElementsByTagName('Title')[0];
+                const title = titleElement ? titleElement.textContent : '';
+              
+                // 獲取 <Abstract> 元素的值
+                const abstractElement = layerElement.getElementsByTagName('Abstract')[0];
+                const abstract = abstractElement ? abstractElement.textContent : '';
+              
+                // 獲取 <SRS> 元素的值，這裡假設有多個 SRS
+                const srsElements = layerElement.getElementsByTagName('SRS');
+                const srsList = Array.from(srsElements).map((srsElement) => srsElement.textContent);
+              
+                // 獲取 <LatLonBoundingBox> 元素的屬性
+                const latLonBoundingBoxElement = layerElement.getElementsByTagName('LatLonBoundingBox')[0];
+                const latLonBoundingBoxAttributes = latLonBoundingBoxElement ? latLonBoundingBoxElement.attributes : {};
+              
+                const maxx = latLonBoundingBoxAttributes.maxx ? latLonBoundingBoxAttributes.maxx.value : '';
+                const maxy = latLonBoundingBoxAttributes.maxy ? latLonBoundingBoxAttributes.maxy.value : '';
+                const minx = latLonBoundingBoxAttributes.minx ? latLonBoundingBoxAttributes.minx.value : '';
+                const miny = latLonBoundingBoxAttributes.miny ? latLonBoundingBoxAttributes.miny.value : '';
+              
+                // 在這裡可以使用獲得的信息進行相應的處理
+                console.log(`Layer ${i + 1}: Name=${name}, Title=${title}, Abstract=${abstract}, SRS=${srsList.join(', ')}, BoundingBox=${minx},${miny},${maxx},${maxy}`);
+            }
         } catch (error) {
             console.error('Error fetching WMS data:', error);
         }
