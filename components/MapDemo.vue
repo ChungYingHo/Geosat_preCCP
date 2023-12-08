@@ -103,21 +103,13 @@ const {sourceL} = storeToRefs(uavStore)
           </div>
       </ol-overlay>
 
-      <!-- !delete the feature-->
+      <!-- select to delete the feature-->
       <ol-interaction-select
         @select="uavStore.seletedDelete"
         :condition="uavStore.selectedConditions.altKeyOnly"
         :filter = "uavStore.selectInteactionFilter"
         v-if="!uavStore.drawEnable"
       >
-        <ol-style>
-          <ol-style-stroke color="orange" :width="10"></ol-style-stroke>
-          <!-- 多邊形內部著色 -->
-          <ol-style-fill color="rgba(255,255,255,0.5)"></ol-style-fill>
-          <ol-style-circle :radius="7">
-            <ol-style-fill color="pink"></ol-style-fill>
-          </ol-style-circle>
-        </ol-style>
       </ol-interaction-select>
 
       <!-- todo wms -->
