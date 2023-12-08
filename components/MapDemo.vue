@@ -42,7 +42,7 @@ const {sourceL} = storeToRefs(uavStore)
       </ol-tile-layer>
       
       <!-- todo 向量圖層，點線面專用 -->
-      <ol-vector-layer zIndex="2" :key="uavStore.resetCounter">
+      <ol-vector-layer zIndex="10000" :key="uavStore.resetCounter">
         <ol-source-vector
           :projection="projection"
           :format="uavStore.geoJson"
@@ -103,22 +103,34 @@ const {sourceL} = storeToRefs(uavStore)
           </div>
       </ol-overlay>
 
-      <!-- !delete the feature-->
+      <!-- select to delete the feature-->
       <ol-interaction-select
         @select="uavStore.seletedDelete"
         :condition="uavStore.selectedConditions.altKeyOnly"
         :filter = "uavStore.selectInteactionFilter"
         v-if="!uavStore.drawEnable"
       >
-        <ol-style>
-          <ol-style-stroke color="orange" :width="10"></ol-style-stroke>
-          <!-- 多邊形內部著色 -->
-          <ol-style-fill color="rgba(255,255,255,0.5)"></ol-style-fill>
-          <ol-style-circle :radius="7">
-            <ol-style-fill color="pink"></ol-style-fill>
-          </ol-style-circle>
-        </ol-style>
       </ol-interaction-select>
+
+      <!-- todo wms -->
+      <!-- 官網範例 -->
+      <ol-image-layer :zIndex="1001" v-if="uavStore.isWMSopen">
+        <ol-source-image-wms
+          url="https://ahocevar.com/geoserver/wms"
+          :extent="[-13884991, 2870341, -7455066, 6338219]"
+          layers="topp:states"
+          serverType="geoserver"
+        />
+      </ol-image-layer>
+      <!-- 台灣國土 -->
+      <ol-image-layer :zIndex="1000" v-if="uavStore.isWMSopen">
+        <ol-source-image-wms
+          url="https://wms.nlsc.gov.tw/wms"
+          :extent="[13884991, 870341, 7455066, 338219]"
+          layers="EMAP"
+          serverType="geoserver"
+        />
+      </ol-image-layer>
 
 
     </ol-map>
