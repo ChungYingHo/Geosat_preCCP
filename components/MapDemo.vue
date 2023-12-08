@@ -8,31 +8,7 @@ const osmLayer = ref(null);
 const bingLayer = ref(null);
 // pinia store 的 ref 解構
 const {sourceL} = storeToRefs(uavStore)
-// const wmsUrl = 'https://wms.nlsc.gov.tw/wms';
-// const wmsParams = {
-//   'LAYERS': 'EMAP2',
-//   'VERSION': '1.3.0',
-//   'FORMAT': 'image/png',
-//   'TILED': true,
-// };
 
-// const wmsLayer = new TileLayer({
-//   source: new TileWMS({
-//     url: wmsUrl,
-//     params: wmsParams,
-//     extent: [119.2, 20.7, 122.1, 25.5],  // 限制的範圍 [minx, miny, maxx, maxy]
-//   }),
-// });
-
-// const map = new Map({
-//   layers: [wmsLayer],
-//   target: 'map',
-//   view: new View({
-//     center: [121, 23.5],
-//     zoom: 8,
-//     extent: [119.2, 20.7, 122.1, 25.5],  // 初始地圖範圍
-//   }),
-// });
 </script>
 
 <template>
@@ -163,6 +139,7 @@ const {sourceL} = storeToRefs(uavStore)
           serverType="geoserver"
         />
       </ol-image-layer>
+      
 
 
     </ol-map>
