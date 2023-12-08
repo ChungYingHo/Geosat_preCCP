@@ -37,6 +37,13 @@ const uavStore = useUavStore()
             :label="`Bing`"
             @change="uavStore.setBaseLayer('bing')"
           ></v-switch>
+          <v-switch
+            v-model="uavStore.isWMSopen"
+            hide-details
+            inset
+            :label="`WMS`"
+            @change="!uavStore.isWMSopen"
+          ></v-switch>
         </v-sheet>
     </div>
 </template>

@@ -119,8 +119,25 @@ export const useUavStore = defineStore('uav', ()=>{
         // selectedPosition.value = [] as number[]
         sourceL.value.source.clear()
         selectedPosition.value = [] as number[]
+        fetchData()
     }
 
+    // !try to fetch wms data
+    const wmsUrl = 'https://wms.nlsc.gov.tw/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.0.0'
+    async function fetchData() {
+        try {
+            const response = await fetch(wmsUrl)
+            const data = await response.text();
+            // 使用 DOMParser 解析 XML
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data, 'text/xml');
+            // 在這裡處理 xmlDoc，例如提取需要的信息
+            console.log(xmlDoc)
+        } catch (error) {
+            console.error('Error fetching WMS data:', error);
+        }
+    }
+    const isWMSopen = ref(false)
 
     return {
         isPopupLayerOpen,
@@ -144,6 +161,7 @@ export const useUavStore = defineStore('uav', ()=>{
         handleReset,
         selectedConditions,
         sourceL,
-        seletedDelete
+        seletedDelete,
+        isWMSopen
     }
 })
