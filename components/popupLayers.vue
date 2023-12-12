@@ -44,6 +44,13 @@ const uavStore = useUavStore()
             :label="`WMS`"
             @change="!uavStore.isWMSopen"
           ></v-switch>
+          <v-switch
+            v-model="uavStore.isWFSopen"
+            hide-details
+            inset
+            :label="`WFS`"
+            @change="uavStore.handleWfs"
+          ></v-switch>
         </v-sheet>
     </div>
 </template>
