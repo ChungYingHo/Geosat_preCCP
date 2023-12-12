@@ -2,6 +2,10 @@
 import * as selectedConditions from 'ol/events/condition'
 import * as extent from "ol/extent"
 import {getLength, getArea} from 'ol/sphere'
+import * as format from 'ol/format'
+import GMLBase from 'ol/format/GMLBase'
+import { Collection } from 'ol'
+import {Feature} from 'ol'
 
 export const useUavStore = defineStore('uav', ()=>{
     const isPopupLayerOpen = ref(false)
@@ -129,42 +133,67 @@ export const useUavStore = defineStore('uav', ()=>{
             const layerElements = xmlDoc.getElementsByTagName('Layer')
             // 在這裡處理 xmlDoc，例如提取需要的信息
             console.log(xmlDoc)
-            for (let i = 0; i < layerElements.length; i++) {
-                const layerElement = layerElements[i];
-              
-                // 獲取 <Name> 元素的值
-                const nameElement = layerElement.getElementsByTagName('Name')[0];
-                const name = nameElement ? nameElement.textContent : '';
-              
-                // 獲取 <Title> 元素的值
-                const titleElement = layerElement.getElementsByTagName('Title')[0];
-                const title = titleElement ? titleElement.textContent : '';
-              
-                // 獲取 <Abstract> 元素的值
-                const abstractElement = layerElement.getElementsByTagName('Abstract')[0];
-                const abstract = abstractElement ? abstractElement.textContent : '';
-              
-                // 獲取 <SRS> 元素的值，這裡假設有多個 SRS
-                const srsElements = layerElement.getElementsByTagName('SRS');
-                const srsList = Array.from(srsElements).map((srsElement) => srsElement.textContent);
-              
-                // 獲取 <LatLonBoundingBox> 元素的屬性
-                const latLonBoundingBoxElement = layerElement.getElementsByTagName('LatLonBoundingBox')[0];
-                const latLonBoundingBoxAttributes = latLonBoundingBoxElement ? latLonBoundingBoxElement.attributes : {};
-              
-                const maxx = latLonBoundingBoxAttributes.maxx ? latLonBoundingBoxAttributes.maxx.value : '';
-                const maxy = latLonBoundingBoxAttributes.maxy ? latLonBoundingBoxAttributes.maxy.value : '';
-                const minx = latLonBoundingBoxAttributes.minx ? latLonBoundingBoxAttributes.minx.value : '';
-                const miny = latLonBoundingBoxAttributes.miny ? latLonBoundingBoxAttributes.miny.value : '';
-              
-                // 在這裡可以使用獲得的信息進行相應的處理
-                console.log(`Layer ${i + 1}: Name=${name}, Title=${title}, Abstract=${abstract}, SRS=${srsList.join(', ')}, BoundingBox=${minx},${miny},${maxx},${maxy}`);
-            }
+            // for (let i = 0; i < layerElements.length; i++) {
+            //     const layerElement = layerElements[i];
+            //     // 獲取 <Name> 元素的值
+            //     const nameElement = layerElement.getElementsByTagName('Name')[0];
+            //     const name = nameElement ? nameElement.textContent : '';
+            //     // 獲取 <Title> 元素的值
+            //     const titleElement = layerElement.getElementsByTagName('Title')[0];
+            //     const title = titleElement ? titleElement.textContent : '';
+            //     // 獲取 <Abstract> 元素的值
+            //     const abstractElement = layerElement.getElementsByTagName('Abstract')[0];
+            //     const abstract = abstractElement ? abstractElement.textContent : '';
+            //     // 獲取 <SRS> 元素的值，這裡假設有多個 SRS
+            //     const srsElements = layerElement.getElementsByTagName('SRS');
+            //     const srsList = Array.from(srsElements).map((srsElement) => srsElement.textContent);
+            //     // 獲取 <LatLonBoundingBox> 元素的屬性
+            //     const latLonBoundingBoxElement = layerElement.getElementsByTagName('LatLonBoundingBox')[0];
+            //     const latLonBoundingBoxAttributes = latLonBoundingBoxElement ? latLonBoundingBoxElement.attributes : {};
+            //     const maxx = latLonBoundingBoxAttributes.maxx ? latLonBoundingBoxAttributes.maxx.value : '';
+            //     const maxy = latLonBoundingBoxAttributes.maxy ? latLonBoundingBoxAttributes.maxy.value : '';
+            //     const minx = latLonBoundingBoxAttributes.minx ? latLonBoundingBoxAttributes.minx.value : '';
+            //     const miny = latLonBoundingBoxAttributes.miny ? latLonBoundingBoxAttributes.miny.value : '';
+            //     // 在這裡可以使用獲得的信息進行相應的處理
+            //     console.log(`Layer ${i + 1}: Name=${name}, Title=${title}, Abstract=${abstract}, SRS=${srsList.join(', ')}, BoundingBox=${minx},${miny},${maxx},${maxy}`);
+            // }
         } catch (error) {
             console.error('Error fetching WMS data:', error);
         }
     }
     const isWMSopen = ref(false)
+
+    // !try to fetch wfs data
+    // !(12/11 註記) 將打 API 的動作交由登入即執行，因此將下方函式送往 signStore
+    const isWFSopen = ref(false)
+    const wfsData = ref<any | null>(null)
+    const wfsUrl = 'https://wfs.nlsc.gov.tw/WFS?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=WFS:VILLAGE_NLSC&SRSNAME=EPSG4326&outputFormat="GML"&FILTER=<ogc:filter xmlns:ogc="http://www.opengis.net/ogc"> <ogc:propertyisequalto><ogc:propertyname>box</ogc:propertyname><ogc:literal>120.105877,22.997709 120.210933,23.053319</ogc:literal></ogc:propertyisequalto></ogc:filter>'
+    const fetchWFS = async()=>{
+        try{
+            const response = await fetch(wfsUrl)
+            const data = await response.text()
+            const parser = new DOMParser()
+            const xmlDoc = parser.parseFromString(data, 'text/xml')
+            const gmlParser = new GMLBase()
+            const features = gmlParser.readFeatures(xmlDoc, {
+                featureProjection: 'EPSG:4326',
+            })
+            // const featureArray = features.map(feature => feature.getProperties())
+            // wfsData.value = new Collection(featureArray)
+            const featureArray = features.map(feature => {
+                feature = new Feature(feature.getProperties());
+                return feature;
+            });
+            wfsData.value = featureArray
+            console.log(wfsData.value)
+            console.log(wfsData.value[0].values_.Shape.MultiPolygon.polygonMember.Polygon._content_.outerBoundaryIs.LinearRing.coordinates)
+        }catch(error){
+            console.error('Error fetching WFS data:', error)
+        }
+    }
+    const handleWfs = ()=>{
+        console.log('click', wfsData.value)
+    }
 
     return {
         isPopupLayerOpen,
@@ -189,6 +218,10 @@ export const useUavStore = defineStore('uav', ()=>{
         selectedConditions,
         sourceL,
         seletedDelete,
-        isWMSopen
+        isWMSopen,
+        isWFSopen,
+        fetchWFS,
+        handleWfs,
+        wfsData
     }
 })

@@ -7,7 +7,8 @@ const jawgLayer = ref(null);
 const osmLayer = ref(null);
 const bingLayer = ref(null);
 // pinia store 的 ref 解構
-const {sourceL} = storeToRefs(uavStore)
+const {sourceL, wfsData} = storeToRefs(uavStore)
+console.log('md', wfsData.value)
 </script>
 
 <template>
@@ -114,14 +115,33 @@ const {sourceL} = storeToRefs(uavStore)
 
       <!-- todo wms -->
       <!-- 台灣國土 -->
-      <ol-image-layer :zIndex="1000" v-if="uavStore.isWMSopen">
+      <!-- <ol-image-layer :zIndex="1000" v-if="uavStore.isWMSopen">
         <ol-source-image-wms
           url="https://wms.nlsc.gov.tw/wms"
           layers="EMAP2"
           serverType="geoserver"
         />
-      </ol-image-layer>
+      </ol-image-layer> -->
+      <ol-tile-layer :zIndex="1001" v-if="uavStore.isWMSopen">
+        <ol-source-tile-wms
+          url="https://wms.nlsc.gov.tw/wms"
+          layers="EMAP2"
+          serverType="geoserver"
+        />
+      </ol-tile-layer>
 
+      <!-- todo wfs -->
+      <ol-vector-layer :zIndex="1005" v-if="uavStore.isWFSopen" >
+        <ol-source-vector  :features="wfsData">
+          <ol-style>
+            <ol-style-stroke color="red" :width="2"></ol-style-stroke>
+            <ol-style-fill color="pink"></ol-style-fill>
+            <ol-style-circle :radius="7">
+              <ol-style-fill color="red"></ol-style-fill>
+            </ol-style-circle>
+          </ol-style>
+        </ol-source-vector>
+      </ol-vector-layer>
 
     </ol-map>
   </div>

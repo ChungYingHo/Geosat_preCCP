@@ -1,7 +1,11 @@
 import Swal from 'sweetalert2'
 import { useLocale } from '~/composables/useLocale'
+import { useUavStore } from './uavStore'
 
 export const useSignStore = defineStore('Sign_', ()=>{
+    // 引用 uavStore
+    const uavStore = useUavStore()
+
     // sweetalert2 引用
     const Toast = Swal.mixin({
         toast: true,
@@ -34,13 +38,14 @@ export const useSignStore = defineStore('Sign_', ()=>{
         counter: (value: string) => value.length <= 10 || 'Max 10 characters',
         email: (value: string) => pattern.test(value) || 'Invalid e-mail.',
     }
-    const handleSubmit = (path:string)=>{
+    const handleSubmit = async (path:string)=>{
         if(path === ('/login')){
             if(loginEmail.value.length > 0 && loginPassword.value.length > 0){
                 Toast.fire({
                     icon: "success",
                     title: "Login successfully"
                 })
+                await uavStore.fetchWFS()
                 return navigateTo(localePath('/main-page'))
             }else{
                 Toast.fire({
