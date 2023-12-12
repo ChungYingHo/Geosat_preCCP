@@ -45,7 +45,6 @@ export const useSignStore = defineStore('Sign_', ()=>{
                     icon: "success",
                     title: "Login successfully"
                 })
-                await uavStore.fetchWFS()
                 return navigateTo(localePath('/main-page'))
             }else{
                 Toast.fire({
