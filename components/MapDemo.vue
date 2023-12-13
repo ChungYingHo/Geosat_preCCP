@@ -7,7 +7,7 @@ const jawgLayer = ref(null);
 const osmLayer = ref(null);
 const bingLayer = ref(null);
 // pinia store 的 ref 解構
-const {sourceL, sourceL2} = storeToRefs(uavStore)
+const {sourceL} = storeToRefs(uavStore)
 </script>
 
 <template>
@@ -128,19 +128,6 @@ const {sourceL, sourceL2} = storeToRefs(uavStore)
           serverType="geoserver"
         />
       </ol-tile-layer>
-
-      <!-- todo wfs -->
-      <ol-vector-layer :zIndex="1005" v-if="uavStore.isWFSopen" >
-        <ol-source-vector  ref="sourceL2" :projection="projection">
-          <ol-style>
-            <ol-style-stroke color="green" :width="2"></ol-style-stroke>
-            <ol-style-fill color="rgba(255,255,255,0.6)"></ol-style-fill>
-            <ol-style-circle :radius="7">
-              <ol-style-fill color="pink"></ol-style-fill>
-            </ol-style-circle>
-          </ol-style>
-        </ol-source-vector>
-      </ol-vector-layer>
 
     </ol-map>
   </div>
