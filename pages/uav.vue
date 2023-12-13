@@ -74,7 +74,7 @@ const uavStore = useUavStore()
                 <MapDemo/>
                 <!-- todo here is popup modal -->
                 <PopupLayers
-                    style="top: 0; left: 20%;"
+                    style="bottom: 0; right: 0;"
                     v-if="uavStore.isPopupLayerOpen"/>
                 <PopupEdit
                     style="top: 0;right: 20vw;"
