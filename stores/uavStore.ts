@@ -2,6 +2,14 @@
 import * as selectedConditions from 'ol/events/condition'
 import * as extent from "ol/extent"
 import {getLength, getArea} from 'ol/sphere'
+import GMLBase from 'ol/format/GMLBase'
+// import WFS from 'ol/format/WFS';
+// import * as ol from 'ol';
+// import * as olgeom from 'ol/geom';
+// import * as olformat from 'ol/format';
+// import proj from 'ol/proj';
+// import * as ol from 'openlayers';
+
 
 export const useUavStore = defineStore('uav', ()=>{
     const isPopupLayerOpen = ref(false)
@@ -119,59 +127,61 @@ export const useUavStore = defineStore('uav', ()=>{
         // selectedPosition.value = [] as number[]
         sourceL.value.source.clear()
         selectedPosition.value = [] as number[]
-        fetchData()
+        // fetchData()
     }
 
     // !try to fetch wms data
-    const wmsUrl = 'https://wms.nlsc.gov.tw/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.0.0'
-    async function fetchData() {
-        try {
-            const response = await fetch(wmsUrl)
-            const data = await response.text();
-            // 使用 DOMParser 解析 XML
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, 'text/xml');
-            const layerElements = xmlDoc.getElementsByTagName('Layer')
-            // 在這裡處理 xmlDoc，例如提取需要的信息
-            console.log(xmlDoc)
-            for (let i = 0; i < layerElements.length; i++) {
-                const layerElement = layerElements[i];
-              
-                // 獲取 <Name> 元素的值
-                const nameElement = layerElement.getElementsByTagName('Name')[0];
-                const name = nameElement ? nameElement.textContent : '';
-              
-                // 獲取 <Title> 元素的值
-                const titleElement = layerElement.getElementsByTagName('Title')[0];
-                const title = titleElement ? titleElement.textContent : '';
-              
-                // 獲取 <Abstract> 元素的值
-                const abstractElement = layerElement.getElementsByTagName('Abstract')[0];
-                const abstract = abstractElement ? abstractElement.textContent : '';
-              
-                // 獲取 <SRS> 元素的值，這裡假設有多個 SRS
-                const srsElements = layerElement.getElementsByTagName('SRS');
-                const srsList = Array.from(srsElements).map((srsElement) => srsElement.textContent);
-              
-                // 獲取 <LatLonBoundingBox> 元素的屬性
-                const latLonBoundingBoxElement = layerElement.getElementsByTagName('LatLonBoundingBox')[0];
-                const latLonBoundingBoxAttributes = latLonBoundingBoxElement ? latLonBoundingBoxElement.attributes : {};
-              
-                const maxx = latLonBoundingBoxAttributes.maxx ? latLonBoundingBoxAttributes.maxx.value : '';
-                const maxy = latLonBoundingBoxAttributes.maxy ? latLonBoundingBoxAttributes.maxy.value : '';
-                const minx = latLonBoundingBoxAttributes.minx ? latLonBoundingBoxAttributes.minx.value : '';
-                const miny = latLonBoundingBoxAttributes.miny ? latLonBoundingBoxAttributes.miny.value : '';
-              
-                // 在這裡可以使用獲得的信息進行相應的處理
-                console.log(`Layer ${i + 1}: Name=${name}, Title=${title}, Abstract=${abstract}, SRS=${srsList.join(', ')}, BoundingBox=${minx},${miny},${maxx},${maxy}`);
-            }
-        } catch (error) {
-            console.error('Error fetching WMS data:', error);
+    const sourceL2 = ref<any | null>(null)
+    const isWFSopen = ref(false)
+    const wfsData = ref<any | null>(null)
+    const wfsUrl = 'https://wfs.nlsc.gov.tw/WFS?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=WFS:VILLAGE_NLSC&SRSNAME=EPSG4326&outputFormat="GML"&FILTER=<ogc:filter xmlns:ogc="http://www.opengis.net/ogc"> <ogc:propertyisequalto><ogc:propertyname>box</ogc:propertyname><ogc:literal>120.105877,22.997709 120.210933,23.053319</ogc:literal></ogc:propertyisequalto></ogc:filter>';
+
+   const fetchWFS = async()=>{
+        try{
+            // call api
+            const response = await fetch(wfsUrl)
+            const data = await response.text()
+            // 解析 gml
+            const parser = new DOMParser()
+            const xmlDoc = parser.parseFromString(data, 'text/xml')
+            const gmlParser = new GMLBase()
+            const features = gmlParser.readFeatures(xmlDoc, {
+                featureProjection: 'EPSG:4326',
+            })
+            wfsData.value = features.map(feature => {
+                feature = new Feature(feature.getProperties());
+                return feature;
+            })
+        }catch(error){
+            console.error('Error fetching WFS data:', error)
         }
     }
+
+    const handleWfs = async ()=>{
+        console.log('click', isWFSopen.value)
+        if(isWFSopen.value === true){
+            await fetchWFS()
+            wfsData.value.forEach((element: any) => {
+                const coord: string = element.values_.Shape.MultiPolygon.polygonMember.Polygon._content_.outerBoundaryIs.LinearRing.coordinates
+                const coordsArray = coord.split(' ').map(coord => {
+                    const [a, b] = coord.split(',').map(parseFloat);
+                    return [a, b];
+                })
+                const polygonGeometry = new Polygon([coordsArray])
+                const polygonFeature = new Feature(polygonGeometry)
+                sourceL.value.source.addFeature(polygonFeature)
+            });
+        }else if(isWFSopen.value === false){
+            console.log(sourceL.value.source)
+            sourceL.value.source.clear()
+        }
+    }
+      
+   
     const isWMSopen = ref(false)
     const isVillage = ref(false)
     const isCITY = ref(false)
+    const isVILLAGE_NLSC = ref(false)
 
     return {
         isPopupLayerOpen,
@@ -198,6 +208,7 @@ export const useUavStore = defineStore('uav', ()=>{
         seletedDelete,
         isWMSopen,
         isVillage,
-        isCITY
+        isCITY,
+        isVILLAGE_NLSC
     }
 })

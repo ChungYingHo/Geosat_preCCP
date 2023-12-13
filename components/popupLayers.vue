@@ -58,6 +58,13 @@ const uavStore = useUavStore()
             :label="`City`"
             @change="!uavStore.isCITY"
           ></v-switch>
+          <v-switch
+            v-model="uavStore.isVILLAGE_NLSC"
+            hide-details
+            inset
+            :label="`VILLAGE_NLSC`"
+            @change="!uavStore.isVILLAGE_NLSC"
+          ></v-switch>
         </v-sheet>
     </div>
 </template>

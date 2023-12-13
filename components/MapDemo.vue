@@ -9,6 +9,7 @@ const bingLayer = ref(null);
 // pinia store 的 ref 解構
 const {sourceL} = storeToRefs(uavStore)
 
+
 </script>
 
 <template>
@@ -139,9 +140,20 @@ const {sourceL} = storeToRefs(uavStore)
           serverType="geoserver"
         />
       </ol-image-layer>
-      
+      <ol-vector-layer :zIndex="1004" v-if="uavStore.isVILLAGE_NLSC">
+        <ol-source-vector :format="new ol.format.WFS()" :url="wfsUrl"></ol-source-vector>
+        <ol-style>
+          <ol-style-stroke color="red" :width="2"></ol-style-stroke>
+        </ol-style>
+      </ol-vector-layer>
 
 
+      <!-- <ol-vector-layer :zIndex="1004" v-if="uavStore.isVILLAGE_NLSC">
+        <ol-source-vector :format="new ol.format.WFS()" :url="wfsUrl"></ol-source-vector>
+        <ol-style>
+          <ol-style-stroke color="red" :width="2"></ol-style-stroke>
+        </ol-style>
+      </ol-vector-layer> -->
     </ol-map>
   </div>
 </template>
