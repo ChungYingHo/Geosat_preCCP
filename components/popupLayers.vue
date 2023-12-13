@@ -49,7 +49,7 @@ const uavStore = useUavStore()
             hide-details
             inset
             :label="`WFS`"
-            @change="uavStore.handleWfs"
+            @change="uavStore.handleWfs()"
           ></v-switch>
         </v-sheet>
     </div>

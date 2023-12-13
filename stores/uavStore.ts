@@ -114,7 +114,7 @@ export const useUavStore = defineStore('uav', ()=>{
         // selectedPosition.value = [] as number[]
         sourceL.value.source.clear()
         selectedPosition.value = [] as number[]
-        fetchData()
+        isWFSopen.value = false
     }
 
     // try to fetch wms data
@@ -159,17 +159,23 @@ export const useUavStore = defineStore('uav', ()=>{
         }
     }
     const handleWfs = async ()=>{
-        await fetchWFS()
-        wfsData.value.forEach((element: any) => {
-            const coord: string = element.values_.Shape.MultiPolygon.polygonMember.Polygon._content_.outerBoundaryIs.LinearRing.coordinates
-            const coordsArray = coord.split(' ').map(coord => {
-                const [lon, lat] = coord.split(',').map(parseFloat);
-                return [lon, lat];
-            })
-            const polygonGeometry = new Polygon([coordsArray])
-            const polygonFeature = new Feature(polygonGeometry)
-            sourceL2.value.source.addFeature(polygonFeature)
-        });
+        console.log('click', isWFSopen.value)
+        if(isWFSopen.value === true){
+            await fetchWFS()
+            wfsData.value.forEach((element: any) => {
+                const coord: string = element.values_.Shape.MultiPolygon.polygonMember.Polygon._content_.outerBoundaryIs.LinearRing.coordinates
+                const coordsArray = coord.split(' ').map(coord => {
+                    const [a, b] = coord.split(',').map(parseFloat);
+                    return [a, b];
+                })
+                const polygonGeometry = new Polygon([coordsArray])
+                const polygonFeature = new Feature(polygonGeometry)
+                sourceL.value.source.addFeature(polygonFeature)
+            });
+        }else if(isWFSopen.value === false){
+            console.log(sourceL.value.source)
+            sourceL.value.source.clear()
+        }
     }
 
     return {
