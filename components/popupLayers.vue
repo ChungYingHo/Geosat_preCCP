@@ -45,25 +45,11 @@ const uavStore = useUavStore()
             @change="!uavStore.isWMSopen"
           ></v-switch>
           <v-switch
-            v-model="uavStore.isVillage"
+            v-model="uavStore.isWFSopen"
             hide-details
             inset
-            :label="`Village`"
-            @change="!uavStore.isVillage"
-          ></v-switch>
-          <v-switch
-            v-model="uavStore.isCITY"
-            hide-details
-            inset
-            :label="`City`"
-            @change="!uavStore.isCITY"
-          ></v-switch>
-          <v-switch
-            v-model="uavStore.isVILLAGE_NLSC"
-            hide-details
-            inset
-            :label="`VILLAGE_NLSC`"
-            @change="!uavStore.isVILLAGE_NLSC"
+            :label="`WFS`"
+            @change="uavStore.handleWfs()"
           ></v-switch>
         </v-sheet>
     </div>

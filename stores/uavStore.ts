@@ -93,11 +93,6 @@ export const useUavStore = defineStore('uav', ()=>{
             selectedPosition.value = [] as number[]
         }
     }
-
-
-   
-
-
     // 過濾交互要素
     const selectInteactionFilter = (feature: any) => {
         let geometryType = feature.getGeometry().getType();
@@ -136,32 +131,7 @@ export const useUavStore = defineStore('uav', ()=>{
             console.error('Error fetching WMS data:', error);
         }
     }
-
-    const handleWfs = async ()=>{
-        console.log('click', isWFSopen.value)
-        if(isWFSopen.value === true){
-            await fetchWFS()
-            wfsData.value.forEach((element: any) => {
-                const coord: string = element.values_.Shape.MultiPolygon.polygonMember.Polygon._content_.outerBoundaryIs.LinearRing.coordinates
-                const coordsArray = coord.split(' ').map(coord => {
-                    const [a, b] = coord.split(',').map(parseFloat);
-                    return [a, b];
-                })
-                const polygonGeometry = new Polygon([coordsArray])
-                const polygonFeature = new Feature(polygonGeometry)
-                sourceL.value.source.addFeature(polygonFeature)
-            });
-        }else if(isWFSopen.value === false){
-            console.log(sourceL.value.source)
-            sourceL.value.source.clear()
-        }
-    }
-      
-   
     const isWMSopen = ref(false)
-    const isVillage = ref(false)
-    const isCITY = ref(false)
-    const isVILLAGE_NLSC = ref(false)
 
     // try to fetch wfs data
     const sourceL2 = ref<any | null>(null)
